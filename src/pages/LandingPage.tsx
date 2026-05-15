@@ -151,9 +151,10 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
              </button>
              <button 
                onClick={onContact}
-               className="bg-transparent text-white px-16 py-5 rounded-sm text-[12px] tracking-[0.4em] font-medium hover:text-gold hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase"
+               className="bg-transparent text-white px-16 py-5 rounded-sm text-[12px] tracking-[0.4em] font-medium hover:text-gold hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase flex items-center justify-center gap-3"
              >
-               CONTACT US
+               <span>CONTACT US</span>
+               <span aria-hidden="true" className="text-[18px] leading-none">›</span>
              </button>
            </div>
          </motion.div>
