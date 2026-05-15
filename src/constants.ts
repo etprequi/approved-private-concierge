@@ -93,7 +93,7 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     make: "Rolls-Royce", 
     model: "Ghost", 
     year: 2024, 
-    category: "Sedan", 
+    category: "CARS", 
     color: "Silver (Platinum)", 
     colorHex: "#C0C0C0", 
     dailyRate: 2200, 
