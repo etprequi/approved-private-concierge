@@ -16,7 +16,7 @@ export default function FleetPage({ vehicles, onBook, onSelect }: FleetPageProps
   const [search, setSearch] = React.useState('');
   
   const filteredVehicles = vehicles.filter(v => {
-    const matchesFilter = filter === 'ALL' || v.category.toUpperCase() === filter;
+    const matchesFilter = filter === 'ALL' || v.category === filter;
     const matchesSearch = `${v.make} ${v.model}`.toLowerCase().includes(search.toLowerCase());
     return matchesFilter && matchesSearch;
   });

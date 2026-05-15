@@ -1,4 +1,4 @@
-export type Category = 'Exotic' | 'SUV' | 'Convertible' | 'Sedan' | 'Yacht' | 'Jet' | 'Aviation';
+export type Category = 'CARS' | 'SUV' | 'Convertible' | 'Sedan' | 'Yacht' | 'Jet' | 'Aviation';
 
 export interface SecurityPackage {
   id: string;
