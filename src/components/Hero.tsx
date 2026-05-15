@@ -30,8 +30,8 @@ export default function Hero({ onBrowseFleet, onContact }: HeroProps) {
           <span className="text-[12px] md:text-[14px] tracking-[0.6em] text-silver font-light uppercase block mb-6">
             ESTABLISHED IN DISCRETION
           </span>
-          <h1 className="font-serif text-2xl sm:text-[2.5rem] md:text-5xl lg:text-6xl leading-tight mb-10 tracking-tight text-white/90 max-w-3xl mx-auto">
-            <span className="block">Reserved For The Exceptional</span>
+          <h1 className="font-serif text-[72px] font-[300] leading-tight mb-10 tracking-tight text-white/90 max-w-3xl mx-auto" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+            <span className="block">Reserved For The <span className="italic">Exceptional</span></span>
           </h1>
           <p className="text-silver text-[12px] sm:text-[13px] md:text-[15px] max-w-2xl mx-auto mb-12 font-light leading-relaxed tracking-widest uppercase">
             APPROVED Private Concierge delivers bespoke lifestyle management 
