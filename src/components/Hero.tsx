@@ -8,7 +8,7 @@ interface HeroProps {
 
 export default function Hero({ onBrowseFleet, onContact }: HeroProps) {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden flex items-center justify-center">
+    <section className="relative min-h-[100svh] w-full overflow-hidden flex items-center justify-center">
       {/* Background Media */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-black/40 z-10" />
@@ -30,7 +30,7 @@ export default function Hero({ onBrowseFleet, onContact }: HeroProps) {
           <span className="text-[12px] md:text-[14px] tracking-[0.6em] text-silver font-light uppercase block mb-6">
             ESTABLISHED IN DISCRETION
           </span>
-          <h1 className="font-serif text-[48px] md:text-[72px] font-[150] leading-tight mb-8 md:mb-10 tracking-tight text-white/90 max-w-3xl mx-auto" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+          <h1 className="font-serif text-[48px] md:text-[72px] font-[100] leading-tight mb-8 md:mb-10 tracking-tight text-white/90 max-w-3xl mx-auto" style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 200 }}>
             <span className="block">Reserved For The <span className="italic">Exceptional</span></span>
           </h1>
           <p className="text-[14px] font-[400] leading-[22.75px] max-w-2xl mx-auto mb-12 tracking-widest px-4 md:px-0" style={{ fontFamily: '"Inter", sans-serif', color: 'rgba(255, 255, 255, 0.5)' }}>
