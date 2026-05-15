@@ -8,7 +8,7 @@ interface FleetFilterProps {
 }
 
 export default function FleetFilter({ selected, onSelect }: FleetFilterProps) {
-  const categories = ['ALL', 'EXOTIC', 'SUV', 'CONVERTIBLE', 'SEDAN', 'YACHT', 'JET'];
+  const categories = ['ALL', 'CARS', 'YACHT', 'JET'];
 
   return (
     <div className="flex flex-wrap gap-4 items-center justify-center py-12">
