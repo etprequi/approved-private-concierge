@@ -30,7 +30,7 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
             </div>
             <button 
               onClick={onViewFleet}
-              className="px-10 py-4 border border-white/10 rounded-[0.85rem] text-[11px] tracking-[0.4em] font-medium hover:bg-white hover:text-black transition-all duration-500 uppercase"
+              className="px-10 py-4 border border-white/10 rounded-sm text-[11px] tracking-[0.4em] font-medium hover:bg-white hover:text-black transition-all duration-500 uppercase"
             >
               Browse Full Fleet
             </button>
@@ -80,7 +80,7 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
                       </div>
                     ))}
                  </div>
-                 <button className="bg-white text-black px-12 py-4 rounded-[0.85rem] text-[11px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all shadow-xl uppercase">
+                 <button className="bg-white text-black px-12 py-4 rounded-sm text-[11px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all shadow-xl uppercase">
                     View Aircraft
                  </button>
               </div>
@@ -113,7 +113,7 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
                     From armed close protection to presidential escort convoys. 
                     Your safety is managed with tactical precision and absolute confidentiality.
                  </p>
-                 <button className="border border-white/20 text-white px-12 py-4 rounded-[0.85rem] text-[11px] tracking-[0.4em] font-bold hover:bg-white hover:text-black transition-all uppercase">
+                 <button className="border border-white/20 text-white px-12 py-4 rounded-sm text-[11px] tracking-[0.4em] font-bold hover:bg-white hover:text-black transition-all uppercase">
                     Security Enquiries
                  </button>
               </div>
@@ -145,13 +145,13 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
            <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-10">
              <button 
                onClick={onViewFleet}
-               className="bg-white text-black px-16 py-5 rounded-[1rem] text-[12px] tracking-[0.4em] font-bold hover:bg-gold hover:text-white transition-all duration-500 w-full md:w-auto shadow-2xl"
+               className="bg-white text-black px-16 py-5 rounded-sm text-[12px] tracking-[0.4em] font-bold hover:bg-gold hover:text-white transition-all duration-500 w-full md:w-auto shadow-2xl"
              >
                BROWSE FLEET
              </button>
              <button 
                onClick={onContact}
-               className="text-white border border-white/10 px-16 py-5 rounded-[1rem] text-[12px] tracking-[0.4em] font-medium hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase"
+               className="bg-transparent text-white px-16 py-5 rounded-sm text-[12px] tracking-[0.4em] font-medium hover:text-gold hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase"
              >
                CONTACT US
              </button>

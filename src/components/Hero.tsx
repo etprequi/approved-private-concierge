@@ -42,13 +42,13 @@ export default function Hero({ onBrowseFleet, onContact }: HeroProps) {
           <div className="flex flex-col md:flex-row items-center justify-center gap-4">
             <button 
               onClick={onBrowseFleet}
-              className="bg-white text-black px-10 py-4 rounded-[0.85rem] text-[12px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all duration-500 w-full md:w-auto"
+              className="bg-white text-black px-10 py-4 rounded-sm text-[12px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all duration-500 w-full md:w-auto"
             >
               BROWSE FLEET
             </button>
             <button 
               onClick={onContact}
-              className="text-white border border-white/20 px-10 py-4 rounded-[0.85rem] text-[12px] tracking-[0.3em] font-medium hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase"
+              className="bg-transparent text-white px-10 py-4 rounded-sm text-[12px] tracking-[0.3em] font-medium hover:text-gold hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase"
             >
               CONTACT US
             </button>
