@@ -16,7 +16,7 @@ export default function Hero({ onBrowseFleet, onContact }: HeroProps) {
         <img 
   src="/images/banner1.jpg" 
   alt="Luxury Car Profile"  
-  className="absolute inset-0 w-full h-full object-cover object-center scale-110 md:scale-100"
+  className="w-full h-full object-contain md:object-cover"
 />
       </div>
 
