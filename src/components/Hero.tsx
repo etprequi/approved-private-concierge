@@ -31,7 +31,8 @@ export default function Hero({ onBrowseFleet, onContact }: HeroProps) {
             ESTABLISHED IN DISCRETION
           </span>
           <h1 className="font-serif text-[48px] md:text-[72px] font-[100] leading-tight mb-8 md:mb-10 tracking-tight text-white/90 max-w-3xl mx-auto" style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 200 }}>
-            <span className="block">Reserved For The <span className="italic">Exceptional</span></span>
+            <span className="block">Reserved For The</span>
+<span className="block italic">Exceptional</span>
           </h1>
           <p className="text-[14px] font-[400] leading-[22.75px] max-w-2xl mx-auto mb-12 tracking-widest px-4 md:px-0" style={{ fontFamily: '"Inter", sans-serif', color: 'rgba(255, 255, 255, 0.5)' }}>
             Luxury is not simply what we provide, it is how we operate: quiet, flawlessly and without compromise.
