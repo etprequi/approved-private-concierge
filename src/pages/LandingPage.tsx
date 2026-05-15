@@ -18,7 +18,7 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
   
   return (
     <div className="bg-black-rich min-h-screen">
-      <Hero onCtaClick={onViewFleet} />
+      <Hero onBrowseFleet={onViewFleet} onContact={onContact} />
       
       {/* Featured Section */}
       <section className="py-32 px-6 md:px-12 border-b border-white/5">

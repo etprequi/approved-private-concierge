@@ -2,10 +2,11 @@ import React from 'react';
 import { motion } from 'motion/react';
 
 interface HeroProps {
-  onCtaClick: () => void;
+  onBrowseFleet: () => void;
+  onContact: () => void;
 }
 
-export default function Hero({ onCtaClick }: HeroProps) {
+export default function Hero({ onBrowseFleet, onContact }: HeroProps) {
   return (
     <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
       {/* Background Media */}
@@ -38,15 +39,18 @@ export default function Hero({ onCtaClick }: HeroProps) {
             with absolute confidentiality and precision.
           </p>
           
-          <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
             <button 
-              onClick={onCtaClick}
-              className="bg-white text-black px-12 py-4 rounded-full text-[12px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all duration-500 w-full md:w-auto"
+              onClick={onBrowseFleet}
+              className="bg-white text-black px-12 py-4 rounded-[1.25rem] text-[12px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all duration-500 w-full md:w-auto"
             >
-              MEMBERS ENTRANCE
+              BROWSE FLEET
             </button>
-            <button className="text-white border border-white/20 px-12 py-4 rounded-full text-[12px] tracking-[0.3em] font-medium hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase">
-              Private Inquiry
+            <button 
+              onClick={onContact}
+              className="text-white border border-white/20 px-12 py-4 rounded-[1.25rem] text-[12px] tracking-[0.3em] font-medium hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase"
+            >
+              CONTACT US
             </button>
           </div>
         </motion.div>
