@@ -4,15 +4,11 @@ import ProcessSection from '../components/ProcessSection';
 import VehicleCard from '../components/VehicleCard';
 import FleetFilter from '../components/FleetFilter';
 import { Vehicle } from '../types';
-import { motion } from 'motion/react';
+import { motion } from "framer-motion";
 
-interface LandingPageProps {
-  vehicles: Vehicle[];
-  onBook: (v: Vehicle) => void;
-  onViewFleet: () => void;
-}
 
-export default function LandingPage({ vehicles, onBook, onViewFleet }: LandingPageProps) {
+
+export default function LandingPage({ vehicles, onBook, onViewFleet }) {
   const featuredVehicles = vehicles.filter(v => v.category !== 'Jet').slice(0, 3);
   
   return (

@@ -1,4 +1,4 @@
-import { Vehicle, Addon } from './types';
+import { Vehicle, Addon, SecurityPackage } from './types';
 
 export const ADDONS: Addon[] = [
   { id: "a1", name: "Chauffeur", price: 400, unit: "per_day" },
