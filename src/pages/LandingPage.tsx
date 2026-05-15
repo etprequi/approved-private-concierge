@@ -30,7 +30,7 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
             </div>
             <button 
               onClick={onViewFleet}
-              className="px-10 py-4 border border-white/10 rounded-full text-[11px] tracking-[0.4em] font-medium hover:bg-white hover:text-black transition-all duration-500 uppercase"
+              className="px-10 py-4 border border-white/10 rounded-[0.85rem] text-[11px] tracking-[0.4em] font-medium hover:bg-white hover:text-black transition-all duration-500 uppercase"
             >
               Browse Full Fleet
             </button>
@@ -80,7 +80,7 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
                       </div>
                     ))}
                  </div>
-                 <button className="bg-white text-black px-12 py-4 rounded-full text-[11px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all shadow-xl uppercase">
+                 <button className="bg-white text-black px-12 py-4 rounded-[0.85rem] text-[11px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all shadow-xl uppercase">
                     View Aircraft
                  </button>
               </div>
@@ -113,7 +113,7 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
                     From armed close protection to presidential escort convoys. 
                     Your safety is managed with tactical precision and absolute confidentiality.
                  </p>
-                 <button className="border border-white/20 text-white px-12 py-4 rounded-full text-[11px] tracking-[0.4em] font-bold hover:bg-white hover:text-black transition-all uppercase">
+                 <button className="border border-white/20 text-white px-12 py-4 rounded-[0.85rem] text-[11px] tracking-[0.4em] font-bold hover:bg-white hover:text-black transition-all uppercase">
                     Security Enquiries
                  </button>
               </div>

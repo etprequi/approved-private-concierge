@@ -30,11 +30,11 @@ export default function Hero({ onBrowseFleet, onContact }: HeroProps) {
           <span className="text-[12px] md:text-[14px] tracking-[0.6em] text-silver font-light uppercase block mb-6">
             ESTABLISHED IN DISCRETION
           </span>
-          <h1 className="font-serif text-4xl md:text-7xl leading-tight mb-10 tracking-tight text-white/90">
-            Not Advertised. Not Accessible. <br />
-            Not for <span className="italic font-light text-gold">Everyone.</span>
+          <h1 className="font-serif text-2xl sm:text-[2.5rem] md:text-5xl lg:text-6xl leading-tight mb-10 tracking-tight text-white/90 max-w-3xl mx-auto">
+            <span className="inline">Not Advertised. Not Accessible.</span>
+            <span className="block md:inline"> Not for <span className="italic font-light text-gold">Everyone.</span></span>
           </h1>
-          <p className="text-silver text-[14px] md:text-[16px] max-w-2xl mx-auto mb-12 font-light leading-relaxed tracking-widest uppercase">
+          <p className="text-silver text-[12px] sm:text-[13px] md:text-[15px] max-w-2xl mx-auto mb-12 font-light leading-relaxed tracking-widest uppercase">
             APPROVED Private Concierge delivers bespoke lifestyle management 
             with absolute confidentiality and precision.
           </p>
@@ -42,13 +42,13 @@ export default function Hero({ onBrowseFleet, onContact }: HeroProps) {
           <div className="flex flex-col md:flex-row items-center justify-center gap-4">
             <button 
               onClick={onBrowseFleet}
-              className="bg-white text-black px-12 py-4 rounded-[1.25rem] text-[12px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all duration-500 w-full md:w-auto"
+              className="bg-white text-black px-10 py-4 rounded-[0.85rem] text-[12px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all duration-500 w-full md:w-auto"
             >
               BROWSE FLEET
             </button>
             <button 
               onClick={onContact}
-              className="text-white border border-white/20 px-12 py-4 rounded-[1.25rem] text-[12px] tracking-[0.3em] font-medium hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase"
+              className="text-white border border-white/20 px-10 py-4 rounded-[0.85rem] text-[12px] tracking-[0.3em] font-medium hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase"
             >
               CONTACT US
             </button>
