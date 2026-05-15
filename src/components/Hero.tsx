@@ -14,7 +14,7 @@ export default function Hero({ onBrowseFleet, onContact }: HeroProps) {
         <div className="absolute inset-0 bg-black/40 z-10" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black z-20" />
         <img 
-          src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=2000&q=90" 
+          src="/images/banner.jpg" 
           alt="Luxury Car Profile" 
           className="w-full h-full object-cover scale-105 animate-slow-zoom"
         />
