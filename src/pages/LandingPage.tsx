@@ -4,11 +4,16 @@ import ProcessSection from '../components/ProcessSection';
 import VehicleCard from '../components/VehicleCard';
 import FleetFilter from '../components/FleetFilter';
 import { Vehicle } from '../types';
-import { motion } from "framer-motion";
+import { motion } from 'motion/react';
 
+interface LandingPageProps {
+  vehicles: Vehicle[];
+  onBook: (v: Vehicle) => void;
+  onViewFleet: () => void;
+  onContact: () => void;
+}
 
-
-export default function LandingPage({ vehicles, onBook, onViewFleet }) {
+export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }: LandingPageProps) {
   const featuredVehicles = vehicles.filter(v => v.category !== 'Jet').slice(0, 3);
   
   return (
@@ -140,12 +145,15 @@ export default function LandingPage({ vehicles, onBook, onViewFleet }) {
            <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-10">
              <button 
                onClick={onViewFleet}
-               className="bg-white text-black px-16 py-5 rounded-full text-[12px] tracking-[0.4em] font-bold hover:bg-gold hover:text-white transition-all duration-500 w-full md:w-auto shadow-2xl"
+               className="bg-white text-black px-16 py-5 rounded-[1rem] text-[12px] tracking-[0.4em] font-bold hover:bg-gold hover:text-white transition-all duration-500 w-full md:w-auto shadow-2xl"
              >
-               MEMBER ACCESS
+               BROWSE FLEET
              </button>
-             <button className="text-white border border-white/10 px-16 py-5 rounded-full text-[12px] tracking-[0.4em] font-medium hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase">
-               Concierge Desk
+             <button 
+               onClick={onContact}
+               className="text-white border border-white/10 px-16 py-5 rounded-[1rem] text-[12px] tracking-[0.4em] font-medium hover:bg-white/10 transition-all duration-500 w-full md:w-auto uppercase"
+             >
+               CONTACT US
              </button>
            </div>
          </motion.div>

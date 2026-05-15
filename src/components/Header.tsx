@@ -22,6 +22,7 @@ export default function Header({ onNavClick }: HeaderProps) {
     { label: 'FLEET', id: 'fleet' },
     { label: 'SECURITY', id: 'security' },
     { label: 'ABOUT', id: 'about' },
+    { label: 'CONTACT', id: 'contact' },
   ];
 
   return (

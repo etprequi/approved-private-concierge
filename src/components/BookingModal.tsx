@@ -24,6 +24,39 @@ export default function BookingModal({ vehicle, onClose, onConfirm }: BookingMod
     dropoff: '',
     payment: 'card'
   });
+  const [validationErrors, setValidationErrors] = React.useState<string[]>([]);
+
+  const validateCustomerInfo = () => {
+    const missing: string[] = [];
+    if (!form.firstName.trim()) missing.push('First name');
+    if (!form.lastName.trim()) missing.push('Last name');
+    if (!form.email.trim()) missing.push('Email address');
+    if (!form.phone.trim()) missing.push('Phone number');
+    return missing;
+  };
+
+  const handleNext = () => {
+    if (step === 2) {
+      const missing = validateCustomerInfo();
+      if (missing.length > 0) {
+        setValidationErrors(missing);
+        return;
+      }
+      setValidationErrors([]);
+    }
+    setStep(s => s + 1);
+  };
+
+  const handleConfirm = () => {
+    const missing = validateCustomerInfo();
+    if (missing.length > 0) {
+      setValidationErrors(missing);
+      setStep(2);
+      return;
+    }
+    setValidationErrors([]);
+    onConfirm({ vehicle, dates, addons: selectedAddons, form, total });
+  };
 
   const nights = React.useMemo(() => {
     if (!dates.start || !dates.end) return 1;
@@ -203,14 +236,28 @@ export default function BookingModal({ vehicle, onClose, onConfirm }: BookingMod
                   exit={{ opacity: 0, x: -20 }}
                 >
                   <h3 className="font-serif text-4xl mb-12 italic font-light">Client Information</h3>
+                  {validationErrors.length > 0 && (
+                    <div className="mb-8 rounded-2xl bg-red-500/10 border border-red-500/20 p-5 text-left text-red-100">
+                      <p className="font-semibold uppercase tracking-[0.2em] mb-3">Required fields missing</p>
+                      <ul className="list-disc list-inside space-y-1 text-[11px]">
+                        {validationErrors.map((error) => (
+                          <li key={error}>{error}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   <div className="grid grid-cols-2 gap-6 mb-8">
                      <input 
+                       type="text"
+                       required
                        placeholder="FIRST NAME" 
                        className="bg-white/[0.03] border border-white/5 p-5 rounded-2xl text-[11px] tracking-widest outline-none focus:border-gold/50"
                        value={form.firstName}
                        onChange={e => setForm({...form, firstName: e.target.value})}
                      />
                      <input 
+                       type="text"
+                       required
                        placeholder="LAST NAME" 
                        className="bg-white/[0.03] border border-white/5 p-5 rounded-2xl text-[11px] tracking-widest outline-none focus:border-gold/50"
                        value={form.lastName}
@@ -219,12 +266,16 @@ export default function BookingModal({ vehicle, onClose, onConfirm }: BookingMod
                   </div>
                   <div className="space-y-6 mb-12">
                      <input 
+                       type="email"
+                       required
                        placeholder="EMAIL ADDRESS" 
                        className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-2xl text-[11px] tracking-widest outline-none focus:border-gold/50"
                        value={form.email}
                        onChange={e => setForm({...form, email: e.target.value})}
                      />
                      <input 
+                       type="tel"
+                       required
                        placeholder="PHONE NUMBER" 
                        className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-2xl text-[11px] tracking-widest outline-none focus:border-gold/50"
                        value={form.phone}
@@ -262,7 +313,7 @@ export default function BookingModal({ vehicle, onClose, onConfirm }: BookingMod
                       BACK
                     </button>
                     <button 
-                      onClick={next}
+                      onClick={handleNext}
                       className="flex-[2] py-5 bg-white text-black rounded-full text-[11px] font-bold tracking-[0.3em] hover:bg-gold hover:text-white transition-all"
                     >
                       CONTINUE TO PAYMENT
@@ -323,7 +374,7 @@ export default function BookingModal({ vehicle, onClose, onConfirm }: BookingMod
                       BACK
                     </button>
                     <button 
-                      onClick={() => onConfirm({ vehicle, dates, addons: selectedAddons, form, total })}
+                      onClick={handleConfirm}
                       className="flex-[2] py-5 bg-gold text-white rounded-full text-[11px] font-bold tracking-[0.3em] hover:bg-white hover:text-black transition-all shadow-xl shadow-gold/20"
                     >
                       CONFIRM RESERVATION

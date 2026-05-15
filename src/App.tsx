@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import LandingPage from './pages/LandingPage';
 import FleetPage from './pages/FleetPage';
@@ -8,17 +8,103 @@ import CustomerDashboard from './pages/CustomerDashboard';
 import AviationPage from './pages/AviationPage';
 import SecurityPage from './pages/SecurityPage';
 import AboutPage from './pages/AboutPage';
+import LoginPage from './pages/LoginPage';
+import ContactPage from './pages/ContactPage';
+import { signInWithFirebase, signOutFirebase, isFirebaseConfigured } from './lib/firebase';
 import { INITIAL_VEHICLES } from './constants';
 import { Vehicle } from './types';
 import { AnimatePresence, motion } from 'motion/react';
 
 export default function App() {
   const [page, setPage] = useState('home');
+  const [auth, setAuth] = useState<{ type: 'customer' | 'staff'; identifier: string } | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [vehicles, setVehicles] = useState(INITIAL_VEHICLES);
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [bookingVehicle, setBookingVehicle] = useState<Vehicle | null>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('approved-auth');
+    if (!saved) return;
+
+    try {
+      const parsed = JSON.parse(saved) as { type: 'customer' | 'staff'; identifier: string };
+      if (parsed?.type === 'customer') {
+        setAuth(parsed);
+        setIsLoggedIn(true);
+        setIsAdmin(false);
+        setPage('dashboard');
+      } else if (parsed?.type === 'staff') {
+        setAuth(parsed);
+        setIsLoggedIn(true);
+        setIsAdmin(true);
+        setPage('admin');
+      }
+    } catch {
+      localStorage.removeItem('approved-auth');
+    }
+  }, []);
+
+  const handleCustomerLogin = async (email: string, password: string) => {
+    if (!email.trim()) return 'Email is required.';
+    if (!password.trim()) return 'Password is required.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      return 'Please enter a valid email address.';
+    }
+
+    if (isFirebaseConfigured) {
+      try {
+        await signInWithFirebase(email.trim(), password.trim());
+      } catch {
+        return 'Unable to authenticate with Firebase. Please verify your credentials.';
+      }
+    }
+
+    const authState = { type: 'customer' as const, identifier: email.trim() };
+    setAuth(authState);
+    setIsLoggedIn(true);
+    setIsAdmin(false);
+    setPage('dashboard');
+    localStorage.setItem('approved-auth', JSON.stringify(authState));
+    return undefined;
+  };
+
+  const handleStaffLogin = async (username: string, password: string) => {
+    if (!username.trim()) return 'Staff username is required.';
+    if (!password.trim()) return 'Staff password is required.';
+
+    if (isFirebaseConfigured) {
+      try {
+        await signInWithFirebase(username.trim(), password.trim());
+      } catch {
+        return 'Unable to authenticate with Firebase. Please verify your staff credentials.';
+      }
+    }
+
+    const validStaffNames = ['staff', 'admin', 'operations'];
+    const isValidStaff = validStaffNames.includes(username.trim().toLowerCase()) || username.trim().toLowerCase().endsWith('@approved.com');
+    if (!isValidStaff) return 'Invalid staff credentials.';
+
+    const authState = { type: 'staff' as const, identifier: username.trim() };
+    setAuth(authState);
+    setIsLoggedIn(true);
+    setIsAdmin(true);
+    setPage('admin');
+    localStorage.setItem('approved-auth', JSON.stringify(authState));
+    return undefined;
+  };
+
+  const handleLogout = async () => {
+    if (isFirebaseConfigured) {
+      await signOutFirebase();
+    }
+    setAuth(null);
+    setIsLoggedIn(false);
+    setIsAdmin(false);
+    setPage('home');
+    localStorage.removeItem('approved-auth');
+  };
 
   const handleNav = (id: string) => {
     if (id === 'account') {
@@ -38,24 +124,46 @@ export default function App() {
     <div className="relative font-sans text-off-white bg-black-rich min-h-screen">
       <AnimatePresence mode="wait">
         {page === 'admin' ? (
-          <motion.div
-            key="admin-view"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <AdminPage onExit={() => setPage('home')} />
-          </motion.div>
+          isAdmin ? (
+            <motion.div
+              key="admin-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <AdminPage onExit={handleLogout} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="admin-login-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <LoginPage onCustomerLogin={handleCustomerLogin} onStaffLogin={handleStaffLogin} />
+            </motion.div>
+          )
         ) : page === 'dashboard' ? (
-          <motion.div
-            key="dashboard-view"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <Header onNavClick={handleNav} />
-            <CustomerDashboard onLogout={() => { setIsLoggedIn(false); setPage('home'); }} />
-          </motion.div>
+          isLoggedIn ? (
+            <motion.div
+              key="dashboard-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <Header onNavClick={handleNav} />
+              <CustomerDashboard onLogout={handleLogout} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="customer-login-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <LoginPage onCustomerLogin={handleCustomerLogin} onStaffLogin={handleStaffLogin} />
+            </motion.div>
+          )
         ) : (
           <motion.div
             key="public-view"
@@ -71,6 +179,7 @@ export default function App() {
                   vehicles={vehicles} 
                   onBook={setBookingVehicle} 
                   onViewFleet={() => setPage('fleet')} 
+                  onContact={() => setPage('contact')}
                 />
               )}
               {page === 'fleet' && (
@@ -89,38 +198,11 @@ export default function App() {
               {page === 'about' && (
                 <AboutPage />
               )}
-              {(page === 'bookings' || page === 'login') && (
-                <div className="pt-40 text-center py-60 bg-black-rich min-h-screen relative overflow-hidden">
-                   <div className="absolute inset-0 bg-gradient-to-b from-gold/5 to-transparent opacity-20" />
-                   <motion.div 
-                     initial={{ opacity: 0, y: 20 }}
-                     whileInView={{ opacity: 1, y: 0 }}
-                     className="max-w-xl mx-auto px-6 relative z-10"
-                   >
-                    <h2 className="font-serif text-5xl italic text-white mb-8">
-                       {page === 'login' ? 'Private Entrance' : 'Elite Access'}
-                    </h2>
-                    <p className="text-silver tracking-[0.2em] text-[12px] mb-12 uppercase leading-loose max-w-sm mx-auto">
-                       Authenticate to access your curated automotive history and upcoming luxury experiences.
-                    </p>
-                    <div className="space-y-6">
-                       <button 
-                         onClick={() => { setIsLoggedIn(true); setPage('dashboard'); }}
-                         className="bg-white text-black px-16 py-4 rounded-full text-[11px] font-bold tracking-[0.3em] transition-all hover:bg-gold hover:text-white shadow-2xl w-full md:w-auto"
-                       >
-                         SIGN IN SECURELY
-                       </button>
-                       <div className="pt-8">
-                          <button 
-                            onClick={() => { setPage('admin'); setIsAdmin(true); }}
-                            className="text-silver hover:text-gold transition-colors text-[10px] tracking-[0.4em] font-medium uppercase"
-                          >
-                            STAFF CREDENTIALS
-                          </button>
-                       </div>
-                    </div>
-                  </motion.div>
-                </div>
+              {page === 'contact' && (
+                <ContactPage />
+              )}
+              {page === 'login' && (
+                <LoginPage onCustomerLogin={handleCustomerLogin} onStaffLogin={handleStaffLogin} />
               )}
             </main>
           </motion.div>
