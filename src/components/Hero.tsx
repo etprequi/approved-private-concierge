@@ -31,8 +31,7 @@ export default function Hero({ onBrowseFleet, onContact }: HeroProps) {
             ESTABLISHED IN DISCRETION
           </span>
           <h1 className="font-serif text-2xl sm:text-[2.5rem] md:text-5xl lg:text-6xl leading-tight mb-10 tracking-tight text-white/90 max-w-3xl mx-auto">
-            <span className="block">Not Advertised. Not Accessible.</span>
-            <span className="block">Not for <span className="italic font-light text-gold">Everyone.</span></span>
+            <span className="block">Reserved For The Exceptional</span>
           </h1>
           <p className="text-silver text-[12px] sm:text-[13px] md:text-[15px] max-w-2xl mx-auto mb-12 font-light leading-relaxed tracking-widest uppercase">
             APPROVED Private Concierge delivers bespoke lifestyle management 
