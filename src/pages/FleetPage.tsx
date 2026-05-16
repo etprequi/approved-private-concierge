@@ -9,9 +9,10 @@ interface FleetPageProps {
   vehicles: Vehicle[];
   onBook: (v: Vehicle, color?: { label: string; hex: string }) => void;
   onSelect: (v: Vehicle) => void;
+  onInquire: (vehicleName: string) => void;
 }
 
-export default function FleetPage({ vehicles, onBook, onSelect }: FleetPageProps) {
+export default function FleetPage({ vehicles, onBook, onSelect, onInquire }: FleetPageProps) {
   const [filter, setFilter] = React.useState('ALL');
   const [search, setSearch] = React.useState('');
   
@@ -56,7 +57,8 @@ export default function FleetPage({ vehicles, onBook, onSelect }: FleetPageProps
                 <VehicleCard 
                   vehicle={vehicle} 
                   onSelect={onSelect}
-                  onBook={(v, color) => onBook(v, color)} 
+                  onBook={(v, color) => onBook(v, color)}
+                  onInquire={onInquire}
                 />
               </motion.div>
             ))}
