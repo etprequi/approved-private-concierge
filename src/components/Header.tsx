@@ -34,9 +34,9 @@ export default function Header({ onNavClick }: HeaderProps) {
     >
       <div className="cursor-pointer" onClick={() => onNavClick('home')}>
   <img 
-    src="/images/logo1.png" 
+    src="/images/logo.png" 
     alt="APPROVED Private Concierge" 
-    className="h-16 md:h-20 w-auto object-contain"
+    className="h-20 md:h-24 w-auto object-contain"
   />
 </div>
 
