@@ -215,11 +215,12 @@ export default function App() {
             <main>
               {page === 'home' && (
                 <LandingPage 
-                  vehicles={vehicles} 
-                  onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })}
-                  onViewFleet={() => setPage('fleet')} 
-                  onContact={() => setPage('contact')}
-                />
+  vehicles={vehicles} 
+  onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })}
+  onViewFleet={() => setPage('fleet')} 
+  onContact={() => setPage('contact')}
+  onInquire={(name) => { setSelectedInquiry(name); setPage('contact'); }}
+/>
               )}
               {page === 'fleet' && (
                 <FleetPage 
