@@ -14,7 +14,7 @@ interface LandingPageProps {
 }
 
 export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }: LandingPageProps) {
-  const featuredVehicles = vehicles.filter(v => v.category !== 'Jet').slice(0, 3);
+  const featuredVehicles = vehicles.filter(v => v.category.toUpperCase() !== 'JET').slice(0, 3);
   
   return (
     <div className="bg-black-rich min-h-screen">
