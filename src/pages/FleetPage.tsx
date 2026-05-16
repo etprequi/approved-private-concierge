@@ -10,10 +10,11 @@ interface FleetPageProps {
   onBook: (v: Vehicle, color?: { label: string; hex: string }) => void;
   onSelect: (v: Vehicle) => void;
   onInquire: (vehicleName: string) => void;
+  initialFilter?: string;
 }
 
-export default function FleetPage({ vehicles, onBook, onSelect, onInquire }: FleetPageProps) {
-  const [filter, setFilter] = React.useState('ALL');
+export default function FleetPage({ vehicles, onBook, onSelect, onInquire, initialFilter }: FleetPageProps) {
+  const [filter, setFilter] = React.useState(initialFilter || 'CARS');
   const [search, setSearch] = React.useState('');
   
   const filteredVehicles = vehicles.filter(v => {
@@ -28,12 +29,11 @@ export default function FleetPage({ vehicles, onBook, onSelect, onInquire }: Fle
         <header className="mb-16 text-center">
            <span className="text-[11px] tracking-[0.6em] text-silver uppercase mb-6 block font-light">OUR COLLECTION</span>
            <h1 className="font-serif text-6xl md:text-8xl italic font-light tracking-wide mb-8 text-white">The Fleet</h1>
-           
            <div className="relative max-w-xl mx-auto mt-12 group">
               <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-silver transition-colors group-focus-within:text-gold" size={18} strokeWidth={1.5} />
               <input 
                 type="text"
-                placeholder="CAR OR JET..."
+                placeholder="CAR, YACHT, OR JET..."
                 className="w-full bg-[#141414] border border-white/5 px-16 py-5 rounded-full text-[11px] tracking-[0.2em] font-medium focus:ring-1 focus:ring-gold/40 focus:border-gold/40 transition-all placeholder:text-dim outline-none"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -69,7 +69,7 @@ export default function FleetPage({ vehicles, onBook, onSelect, onInquire }: Fle
           <div className="py-32 text-center">
             <p className="text-silver font-serif italic text-2xl">No vehicles matching your criteria.</p>
             <button 
-              onClick={() => { setFilter('ALL'); setSearch(''); }}
+              onClick={() => { setFilter('CARS'); setSearch(''); }}
               className="mt-8 text-gold border-b border-gold/20 pb-1 text-[11px] tracking-[0.2em] font-medium"
             >
               RESET ALL FILTERS

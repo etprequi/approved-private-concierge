@@ -24,11 +24,11 @@ export default function App() {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [bookingVehicle, setBookingVehicle] = useState<{ vehicle: Vehicle; selectedColor?: { label: string; hex: string } } | null>(null);
   const [selectedInquiry, setSelectedInquiry] = useState<string | undefined>(undefined);
+  const [fleetFilter, setFleetFilter] = useState('ALL');
 
   useEffect(() => {
     const saved = localStorage.getItem('approved-auth');
     if (!saved) return;
-
     try {
       const parsed = JSON.parse(saved) as { type: 'customer' | 'staff'; identifier: string };
       if (parsed?.type === 'customer') {
@@ -53,7 +53,6 @@ export default function App() {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       return 'Please enter a valid email address.';
     }
-
     try {
       const usersModule = await import('./lib/users');
       const valid = usersModule.validateCredentials(email.trim(), password.trim(), 'customer');
@@ -66,10 +65,7 @@ export default function App() {
         localStorage.setItem('approved-auth', JSON.stringify(authState));
         return undefined;
       }
-    } catch {
-      // ignore
-    }
-
+    } catch { }
     if (isFirebaseConfigured) {
       try {
         await signInWithFirebase(email.trim(), password.trim());
@@ -77,7 +73,6 @@ export default function App() {
         return 'Unable to authenticate with Firebase. Please verify your credentials.';
       }
     }
-
     const authState = { type: 'customer' as const, identifier: email.trim() };
     setAuth(authState);
     setIsLoggedIn(true);
@@ -90,7 +85,6 @@ export default function App() {
   const handleStaffLogin = async (username: string, password: string) => {
     if (!username.trim()) return 'Staff username is required.';
     if (!password.trim()) return 'Staff password is required.';
-
     try {
       const usersModule = await import('./lib/users');
       const valid = usersModule.validateCredentials(username.trim(), password.trim(), 'staff');
@@ -103,10 +97,7 @@ export default function App() {
         localStorage.setItem('approved-auth', JSON.stringify(authState));
         return undefined;
       }
-    } catch {
-      // ignore
-    }
-
+    } catch { }
     if (isFirebaseConfigured) {
       try {
         await signInWithFirebase(username.trim(), password.trim());
@@ -114,11 +105,9 @@ export default function App() {
         return 'Unable to authenticate with Firebase. Please verify your staff credentials.';
       }
     }
-
     const validStaffNames = ['staff', 'admin', 'operations'];
     const isValidStaff = validStaffNames.includes(username.trim().toLowerCase()) || username.trim().toLowerCase().endsWith('@approved.com');
     if (!isValidStaff) return 'Invalid staff credentials.';
-
     const authState = { type: 'staff' as const, identifier: username.trim() };
     setAuth(authState);
     setIsLoggedIn(true);
@@ -129,9 +118,7 @@ export default function App() {
   };
 
   const handleLogout = async () => {
-    if (isFirebaseConfigured) {
-      await signOutFirebase();
-    }
+    if (isFirebaseConfigured) await signOutFirebase();
     setAuth(null);
     setIsLoggedIn(false);
     setIsAdmin(false);
@@ -164,63 +151,38 @@ export default function App() {
       <AnimatePresence mode="wait">
         {page === 'admin' ? (
           isAdmin ? (
-            <motion.div
-              key="admin-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
+            <motion.div key="admin-view" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <AdminPage onExit={handleLogout} />
             </motion.div>
           ) : (
-            <motion.div
-              key="admin-login-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
+            <motion.div key="admin-login-view" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <LoginPage onCustomerLogin={handleCustomerLogin} onStaffLogin={handleStaffLogin} />
             </motion.div>
           )
         ) : page === 'dashboard' ? (
           isLoggedIn ? (
-            <motion.div
-              key="dashboard-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
+            <motion.div key="dashboard-view" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <Header onNavClick={handleNav} />
               <CustomerDashboard onLogout={handleLogout} />
             </motion.div>
           ) : (
-            <motion.div
-              key="customer-login-view"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
+            <motion.div key="customer-login-view" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <LoginPage onCustomerLogin={handleCustomerLogin} onStaffLogin={handleStaffLogin} />
             </motion.div>
           )
         ) : (
-          <motion.div
-            key="public-view"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
+          <motion.div key="public-view" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <Header onNavClick={handleNav} />
-            
             <main>
               {page === 'home' && (
                 <LandingPage 
-  vehicles={vehicles} 
-  onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })}
-  onViewFleet={() => setPage('fleet')} 
-  onContact={() => setPage('contact')}
-  onInquire={(name) => { setSelectedInquiry(name); setPage('contact'); }}
-/>
+                  vehicles={vehicles} 
+                  onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })}
+                  onViewFleet={() => { setFleetFilter('ALL'); setPage('fleet'); }} 
+                  onViewAircraft={() => { setFleetFilter('JET'); setPage('fleet'); }}
+                  onContact={() => setPage('contact')}
+                  onInquire={(name) => { setSelectedInquiry(name); setPage('contact'); }}
+                />
               )}
               {page === 'fleet' && (
                 <FleetPage 
@@ -228,23 +190,14 @@ export default function App() {
                   onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })}
                   onSelect={setSelectedVehicle}
                   onInquire={(name) => { setSelectedInquiry(name); setPage('contact'); }}
+                  initialFilter={fleetFilter}
                 />
               )}
-              {page === 'aviation' && (
-                <AviationPage />
-              )}
-              {page === 'security' && (
-                <SecurityPage onContact={handleContact} />
-              )}
-              {page === 'about' && (
-                <AboutPage />
-              )}
-              {page === 'contact' && (
-                <ContactPage selectedService={selectedInquiry} />
-              )}
-              {page === 'login' && (
-                <LoginPage onCustomerLogin={handleCustomerLogin} onStaffLogin={handleStaffLogin} />
-              )}
+              {page === 'aviation' && <AviationPage />}
+              {page === 'security' && <SecurityPage onContact={handleContact} />}
+              {page === 'about' && <AboutPage />}
+              {page === 'contact' && <ContactPage selectedService={selectedInquiry} />}
+              {page === 'login' && <LoginPage onCustomerLogin={handleCustomerLogin} onStaffLogin={handleStaffLogin} />}
             </main>
           </motion.div>
         )}
