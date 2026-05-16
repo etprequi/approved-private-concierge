@@ -113,10 +113,10 @@ export default function CustomerDashboard({ onLogout }: CustomerDashboardProps) 
                       </div>
                       <div className="flex items-center space-x-6">
                         <div className="w-24 h-16 rounded-xl overflow-hidden">
-                          <img src="https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=400&q=80" className="w-full h-full object-cover" />
+                          <img src="/images/Lambo_Urus_Yellow.jpg" className="w-full h-full object-cover" />
                         </div>
                         <div>
-                          <p className="font-serif text-xl">Ferrari 488 GTB</p>
+                          <p className="font-serif text-xl">Lamborghini Urus</p>
                           <p className="text-silver text-[12px] tracking-widest uppercase mt-1">JUL 20 - JUL 23</p>
                         </div>
                       </div>
@@ -178,12 +178,12 @@ export default function CustomerDashboard({ onLogout }: CustomerDashboardProps) 
                    {[1, 2, 3].map((i) => (
                      <div key={i} className="glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8">
                         <div className="w-full md:w-48 h-32 rounded-2xl overflow-hidden flex-shrink-0">
-                           <img src={i === 1 ? "https://images.unsplash.com/photo-1621135802920-133df287f89c?w=400&q=80" : "https://images.unsplash.com/photo-1540946485063-a40da27545f8?w=400&q=80"} className="w-full h-full object-cover" />
+                           <img src={i === 1 ? "/images/Lambo_Urus_Yellow.jpg" : "/images/Learjet 45.jpg"} className="w-full h-full object-cover" />
                         </div>
                         <div className="flex-1 space-y-2">
                            <div className="flex justify-between items-start">
                               <div>
-                                 <h4 className="font-serif text-2xl">{i === 1 ? 'Lamborghini Urus' : 'Azimut Superyacht'}</h4>
+                                 <h4 className="font-serif text-2xl">{i === 1 ? 'Lamborghini Urus' : 'Learjet 45'}</h4>
                                  <p className="text-silver text-[12px] tracking-widest uppercase">JUNE 12 - JUNE 15, 2026</p>
                               </div>
                               <span className="px-4 py-1 rounded-full bg-green-400/10 text-green-400 text-[9px] font-bold tracking-widest uppercase">COMPLETED</span>
@@ -191,7 +191,7 @@ export default function CustomerDashboard({ onLogout }: CustomerDashboardProps) 
                            <div className="pt-4 flex items-center space-x-12">
                               <div>
                                  <p className="text-dim text-[9px] tracking-widest mb-1 uppercase">TOTAL COST</p>
-                                 <p className="font-serif text-xl">{i === 1 ? '$5,400' : '$12,800'}</p>
+                                 <p className="font-serif text-xl">{i === 1 ? '$5,400' : '$8,900'}</p>
                               </div>
                               <div>
                                  <p className="text-dim text-[9px] tracking-widest mb-1 uppercase">REFERENCE</p>

@@ -62,7 +62,7 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
            <div className="grid md:grid-cols-2 gap-20 items-center">
               <div className="order-2 md:order-1">
                  <div className="rounded-[3rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=1200&q=80" alt="Private Jet" className="w-full h-full object-cover aspect-[4/5]" />
+                    <img src="/images/Learjet 45.jpg" alt="Private Jet" className="w-full h-full object-cover aspect-[4/5]" />
                  </div>
               </div>
               <div className="order-1 md:order-2 space-y-10">

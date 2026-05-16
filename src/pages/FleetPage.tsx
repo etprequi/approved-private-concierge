@@ -32,7 +32,7 @@ export default function FleetPage({ vehicles, onBook, onSelect }: FleetPageProps
               <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-silver transition-colors group-focus-within:text-gold" size={18} strokeWidth={1.5} />
               <input 
                 type="text"
-                placeholder="CAR, YACHT, OR JET..."
+                placeholder="CAR OR JET..."
                 className="w-full bg-[#141414] border border-white/5 px-16 py-5 rounded-full text-[11px] tracking-[0.2em] font-medium focus:ring-1 focus:ring-gold/40 focus:border-gold/40 transition-all placeholder:text-dim outline-none"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}

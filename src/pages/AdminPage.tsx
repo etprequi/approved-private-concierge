@@ -73,7 +73,7 @@ export default function AdminPage({ onExit }: AdminPageProps) {
                       </tr>
                     </thead>
                     <tbody className="text-[12px] tracking-wide">
-                      {['Lamborghini Urus', 'Ferrari 488 GTB', 'Rolls-Royce Ghost', 'Hawker 400 XP', 'Azimut 60ft'].map((asset, i) => (
+                      {['Lamborghini Urus', 'Rolls-Royce Cullinan', 'Learjet 45', 'Bombardier Challenger 350'].map((asset, i) => (
                         <tr key={i} className="border-b border-white/[0.02] hover:bg-white/[0.01] transition-colors group">
                            <td className="py-6 px-4">
                               <p className="text-white font-medium mb-1">{asset}</p>
@@ -123,7 +123,7 @@ export default function AdminPage({ onExit }: AdminPageProps) {
                               <p className="text-white font-medium">Cassie Arandel</p>
                               <p className="text-dim text-[10px] tracking-widest">VIP · AUTHENTICATED</p>
                             </td>
-                            <td className="py-6 px-4 text-silver">Ferrari 488 GTB</td>
+                            <td className="py-6 px-4 text-silver">Lamborghini Urus</td>
                             <td className="py-6 px-4">
                                <span className="px-3 py-1 rounded-full bg-gold/10 text-gold text-[9px] font-bold tracking-widest uppercase">Confirmed</span>
                             </td>
