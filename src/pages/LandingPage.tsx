@@ -120,7 +120,7 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
               <div>
                  <div className="rounded-[3rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl relative">
                     <div className="absolute inset-0 bg-black/20" />
-                    <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=1200&q=80" alt="Security SUV" className="w-full h-full object-cover aspect-[4/5]" />
+                    <img src="/images/banner.jpg" alt="Security SUV" className="w-full h-full object-cover aspect-[4/5]" />
                  </div>
               </div>
            </div>

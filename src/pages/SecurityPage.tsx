@@ -82,7 +82,7 @@ export default function SecurityPage() {
                  </button>
               </div>
               <div className="rounded-3xl overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
-                 <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=800&q=80" alt="Security SUV" className="w-full h-full object-cover" />
+                 <img src="/images/banner.jpg" alt="Security SUV" className="w-full h-full object-cover" />
               </div>
            </div>
         </section>

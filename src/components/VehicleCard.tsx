@@ -12,6 +12,7 @@ interface VehicleCardProps {
 
 export default function VehicleCard({ vehicle, onSelect, onBook }: VehicleCardProps) {
   const [selectedColorIdx, setSelectedColorIdx] = React.useState(0);
+  const selectedPhoto = vehicle.colorOptions ? vehicle.colorOptions[selectedColorIdx]?.photo ?? vehicle.photo : vehicle.photo;
   const badgeColor = vehicle.colorOptions ? vehicle.colorOptions[selectedColorIdx]?.hex ?? vehicle.colorHex : vehicle.colorHex;
   return (
     <motion.div 
@@ -21,7 +22,7 @@ export default function VehicleCard({ vehicle, onSelect, onBook }: VehicleCardPr
       {/* Image Container */}
       <div className="relative h-[280px] overflow-hidden">
         <img 
-          src={vehicle.photo} 
+          src={selectedPhoto} 
           alt={`${vehicle.make} ${vehicle.model}`}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />

@@ -61,8 +61,8 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     color: "Yellow",
     colorHex: "#FFD700",
     colorOptions: [
-      { label: 'Yellow', hex: '#FFD700' },
-      { label: 'White', hex: '#FFFFFF' }
+      { label: 'Yellow', hex: '#FFD700', photo: '/images/Lambo_Urus_Yellow.jpg' },
+      { label: 'White', hex: '#FFFFFF', photo: '/images/Lambo_Urus_White.jpg' }
     ],
     dailyRate: 1200,
     deposit: 2000,
@@ -82,9 +82,9 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     color: "Red",
     colorHex: "#C40000",
     colorOptions: [
-      { label: 'Red', hex: '#C40000' },
-      { label: 'Black', hex: '#000000' },
-      { label: 'White', hex: '#FFFFFF' }
+      { label: 'Red', hex: '#C40000', photo: '/images/Lambco_Huracan_Red.jpg' },
+      { label: 'Black', hex: '#000000', photo: '/images/Lambco_Huracan_Black.jpg' },
+      { label: 'White', hex: '#FFFFFF', photo: '/images/Lambco_Huracan_White.jpg' }
     ],
     dailyRate: 1500,
     deposit: 2000,
@@ -104,8 +104,8 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     color: "Black",
     colorHex: "#000000",
     colorOptions: [
-      { label: 'Black', hex: '#000000' },
-      { label: 'White', hex: '#FFFFFF' }
+      { label: 'Black', hex: '#000000', photo: '/images/Rolls_Royce_Cullinan_Black.jpg' },
+      { label: 'White', hex: '#FFFFFF', photo: '/images/Rolls_Royce_Cullinan_White.jpg' }
     ],
     dailyRate: 1500,
     deposit: 3000,
