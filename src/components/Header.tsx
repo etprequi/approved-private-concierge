@@ -32,10 +32,13 @@ export default function Header({ onNavClick }: HeaderProps) {
         isScrolled ? "bg-black-rich/90 backdrop-blur-md border-b border-white/5 py-4" : "bg-transparent"
       )}
     >
-      <div className="flex flex-col cursor-pointer group" onClick={() => onNavClick('home')}>
-        <span className="font-serif text-2xl tracking-[0.2em] font-medium transition-colors group-hover:text-gold uppercase">APPROVED</span>
-        <span className="text-[9px] tracking-[0.5em] text-silver font-light uppercase">Private Concierge</span>
-      </div>
+      <div className="cursor-pointer" onClick={() => onNavClick('home')}>
+  <img 
+    src="/images/logo.png" 
+    alt="APPROVED Private Concierge" 
+    className="h-10 md:h-12 w-auto object-contain"
+  />
+</div>
 
       {/* Desktop Nav */}
       <nav className="hidden md:flex items-center space-x-12">
