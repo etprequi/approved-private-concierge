@@ -44,14 +44,8 @@ export const SECURITY_PACKAGES: SecurityPackage[] = [
 ];
 
 export const AVIATION_FLEET: Vehicle[] = [
-  // STANDARD JETS
-  { id: "j1", make: "Hawker", model: "400 XP", year: 2022, category: "JET", color: "Arctic White", colorHex: "#ffffff", dailyRate: 0, deposit: 0, seats: 7, status: "available", features: ["Standard Jet", "Range: 1,500nm", "Quiet Cabin"], photo: "https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=1200&q=80", description: "The Hawker 400XP is the product of years of refinement by Beechcraft." },
-  { id: "j2", make: "Dassault", model: "Falcon 10", year: 2021, category: "JET", color: "Silver", colorHex: "#C0C0C0", dailyRate: 0, deposit: 0, seats: 6, status: "available", features: ["Standard Jet", "High Speed", "Versatile"], photo: "https://images.unsplash.com/photo-1583663848850-47af132dc08e?w=1200&q=80", description: "Compact power and efficiency for short-to-mid range missions." },
-  // MID-TIER JETS
-  { id: "j3", make: "Bombardier", model: "Challenger 350", year: 2023, category: "JET", color: "Obsidian Black", colorHex: "#000000", dailyRate: 0, deposit: 0, seats: 10, status: "available", features: ["Mid-Tier", "Global Range", "Elite Interior"], photo: "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?w=1200&q=80", description: "The best-selling business jet of the last decade. Luxury without compromise." },
-  { id: "j4", make: "Gulfstream", model: "G280", year: 2024, category: "JET", color: "Platinum", colorHex: "#E5E4E2", dailyRate: 0, deposit: 0, seats: 10, status: "available", features: ["Mid-Tier", "Speed Record Holder", "Quiet Performance"], photo: "https://images.unsplash.com/photo-1626244844391-744040974edb?w=1200&q=80", description: "Unrivaled performance in the super-midsize category." },
-  // PRESIDENTIAL
-  { id: "j5", make: "Boeing", model: "Business Jet BBJ", year: 2024, category: "JET", color: "White/Gold", colorHex: "#f0f0f0", dailyRate: 0, deposit: 0, seats: 19, status: "available", features: ["Presidential", "Apartment-Style Cabin", "Master Bedroom", "Global Connectivity"], photo: "https://images.unsplash.com/photo-1520437358207-323b43b50729?w=1200&q=80", description: "The ultimate airborne office and luxury residence. True global reach." }
+  { id: "j1", make: "Learjet", model: "45", year: 2023, category: "JET", color: "Pearl White", colorHex: "#F5F5F5", dailyRate: 0, deposit: 0, seats: 8, status: "available", features: ["8 Seater", "Two Honeywell TFE731-20AR TurboFan Engines", "Private Cabin", "High-Speed Cruise"], photo: "/images/Learjet 45.jpg", description: "The Learjet 45 offers sleek performance and eight-seat comfort, powered by twin Honeywell TFE731-20AR turbofan engines." },
+  { id: "j2", make: "Bombardier", model: "Challenger 350", year: 2023, category: "JET", color: "Obsidian Black", colorHex: "#000000", dailyRate: 0, deposit: 0, seats: 10, status: "available", features: ["10 Seater", "Two Honeywell HTF7350 Turbofan Engines", "Global Range", "Executive Cabin"], photo: "/images/Bombardier Challenger.jpg", description: "The Challenger 350 is a ten-seat super-midsize jet powered by twin Honeywell HTF7350 turbofan engines for premium intercontinental travel." }
 ];
 
 export const INITIAL_VEHICLES: Vehicle[] = [
@@ -64,8 +58,8 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     model: "Urus",
     year: 2024,
     category: "CARS",
-    color: "Nero (Black)",
-    colorHex: "#1a1a1a",
+    color: "Yellow",
+    colorHex: "#FFD700",
     colorOptions: [
       { label: 'Yellow', hex: '#FFD700' },
       { label: 'White', hex: '#FFFFFF' }
@@ -75,7 +69,7 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     seats: 4,
     status: "available",
     features: ["AWD", "Carbon Fiber Package", "Bang & Olufsen Sound", "Panoramic Roof"],
-    photo: "https://images.unsplash.com/photo-1621135802920-133df287f89c?w=1200&q=80",
+    photo: "/images/Lambo_Urus_Yellow.jpg",
     description: "The world's first Super SUV. Raw power meets everyday usability in the most aggressive Lamborghini ever built."
   },
   // Lamborghini Huracan
@@ -85,7 +79,7 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     model: "Huracan",
     year: 2023,
     category: "CARS",
-    color: "Rosso (Red)",
+    color: "Red",
     colorHex: "#C40000",
     colorOptions: [
       { label: 'Red', hex: '#C40000' },
@@ -97,7 +91,7 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     seats: 2,
     status: "available",
     features: ["V10 Engine", "Magnetic Suspension", "Carbon Ceramic Brakes"],
-    photo: "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=1200&q=80",
+    photo: "/images/Lambco_Huracan_Red.jpg",
     description: "A razor-sharp supercar delivering uncompromised performance and handling."
   },
   // Rolls-Royce Cullinan
@@ -118,7 +112,7 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     seats: 5,
     status: "available",
     features: ["V12 Engine", "Luxury Interior", "Rear Theatre"],
-    photo: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&q=80",
+    photo: "/images/Rolls_Royce_Cullinan_Black.jpg",
     description: "A statement of ultimate presence and comfort; the Cullinan is the SUV for the most discerning clients."
   }
 ];
