@@ -10,17 +10,18 @@ interface LandingPageProps {
   vehicles: Vehicle[];
   onBook: (v: Vehicle, color?: { label: string; hex: string }) => void;
   onViewFleet: () => void;
+  onViewAircraft: () => void;
   onContact: () => void;
+  onInquire: (vehicleName: string) => void;
 }
 
-export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }: LandingPageProps) {
+export default function LandingPage({ vehicles, onBook, onViewFleet, onViewAircraft, onContact, onInquire }: LandingPageProps) {
   const featuredVehicles = vehicles.filter(v => v.category.toUpperCase() !== 'JET').slice(0, 3);
   
   return (
     <div className="bg-black-rich min-h-screen">
       <Hero onBrowseFleet={onViewFleet} onContact={onContact} />
       
-      {/* Featured Section */}
       <section className="py-32 px-6 md:px-12 border-b border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20 space-y-8 md:space-y-0 text-center md:text-left">
@@ -45,18 +46,18 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: idx * 0.1 }}
               >
-                 <VehicleCard 
-                   vehicle={vehicle} 
-                   onSelect={(v) => console.log('Select', v)}
-                   onBook={(v, color) => onBook(v, color)} 
-                 />
+                <VehicleCard 
+                  vehicle={vehicle} 
+                  onSelect={(v) => console.log('Select', v)}
+                  onBook={(v, color) => onBook(v, color)}
+                  onInquire={onInquire}
+                />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Aviation Teaser */}
       <section className="py-32 px-6 md:px-12 bg-black-pure border-b border-white/5">
         <div className="max-w-7xl mx-auto">
            <div className="grid md:grid-cols-2 gap-20 items-center">
@@ -80,7 +81,10 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
                       </div>
                     ))}
                  </div>
-                 <button className="bg-white text-black px-12 py-4 rounded-sm text-[11px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all shadow-xl uppercase">
+                 <button 
+                   onClick={onViewAircraft}
+                   className="bg-white text-black px-12 py-4 rounded-sm text-[11px] tracking-[0.3em] font-bold hover:bg-gold hover:text-white transition-all shadow-xl uppercase"
+                 >
                     View Aircraft
                  </button>
               </div>
@@ -88,7 +92,6 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
         </div>
       </section>
 
-      {/* Philosophy Callout */}
       <section className="py-40 px-6 text-center border-b border-white/5 bg-gradient-to-b from-black-pure to-black-rich">
          <motion.div
            initial={{ opacity: 0, y: 20 }}
@@ -96,13 +99,12 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
            className="max-w-4xl mx-auto"
          >
             <p className="font-serif text-3xl md:text-5xl italic text-white leading-snug mb-12">
-               “APPROVED was built for those who understand that true luxury is not status displayed to the public — it is access granted to a select few.”
+               "APPROVED was built for those who understand that true luxury is not status displayed to the public — it is access granted to a select few."
             </p>
             <div className="w-24 h-[1px] bg-gold/30 mx-auto" />
          </motion.div>
       </section>
 
-      {/* Security Teaser */}
       <section className="py-32 px-6 md:px-12 bg-black-rich">
         <div className="max-w-7xl mx-auto">
            <div className="grid md:grid-cols-2 gap-20 items-center">
@@ -113,7 +115,10 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
                     From armed close protection to presidential escort convoys. 
                     Your safety is managed with tactical precision and absolute confidentiality.
                  </p>
-                 <button className="border border-white/20 text-white px-12 py-4 rounded-sm text-[11px] tracking-[0.4em] font-bold hover:bg-white hover:text-black transition-all uppercase">
+                 <button 
+                   onClick={onContact}
+                   className="border border-white/20 text-white px-12 py-4 rounded-sm text-[11px] tracking-[0.4em] font-bold hover:bg-white hover:text-black transition-all uppercase"
+                 >
                     Security Enquiries
                  </button>
               </div>
@@ -129,7 +134,6 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
 
       <ProcessSection />
 
-      {/* Experience CTA */}
       <section className="py-40 px-6 text-center bg-black-pure relative overflow-hidden">
          <div className="absolute inset-0 bg-gold/5 opacity-30 pointer-events-none" />
          <motion.div
@@ -160,7 +164,6 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
          </motion.div>
       </section>
 
-      {/* Footer */}
       <footer className="py-32 px-6 md:px-12 border-t border-white/5 bg-black-pure relative z-20">
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-20">
           <div className="md:col-span-1">
@@ -172,7 +175,6 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
                Exclusivity by design. Discretion by demand. We represent individuals who operate at the highest level.
              </p>
           </div>
-          
           <div>
             <h4 className="text-[11px] tracking-[0.4em] font-bold mb-10 uppercase text-white">Directory</h4>
             <ul className="space-y-5">
@@ -181,7 +183,6 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
               ))}
             </ul>
           </div>
-
           <div>
              <h4 className="text-[11px] tracking-[0.4em] font-bold mb-10 uppercase text-white">Identity</h4>
              <ul className="space-y-5">
@@ -190,7 +191,6 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
                ))}
              </ul>
           </div>
-
           <div>
             <h4 className="text-[11px] tracking-[0.4em] font-bold mb-10 uppercase text-white">Confidential Channel</h4>
             <p className="text-silver text-[12px] font-light mb-8 tracking-widest uppercase">Request a private encrypted communication channel.</p>
