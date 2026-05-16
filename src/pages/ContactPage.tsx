@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, User, MessageSquare } from 'lucide-react';
 
-export default function ContactPage() {
+interface ContactPageProps {
+  selectedService?: string;
+}
+
+export default function ContactPage({ selectedService }: ContactPageProps) {
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    message: '',
+    message: selectedService ? `I would like to inquire about: ${selectedService}` : '',
   });
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (selectedService) {
+      setForm((prev) => ({
+        ...prev,
+        message: `I would like to inquire about: ${selectedService}`
+      }));
+    }
+  }, [selectedService]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,6 +46,12 @@ export default function ContactPage() {
               Send your request, preferred dates, and requirements. Our concierge team will review it and reach back out to you directly via the details provided.
             </p>
             <div className="mt-16 space-y-8">
+              {selectedService && (
+                <div className="rounded-3xl bg-white/5 border border-white/10 p-6 text-white">
+                  <p className="text-[10px] tracking-[0.4em] uppercase font-bold text-gold mb-3">Selected Service</p>
+                  <p className="text-[14px] leading-relaxed">{selectedService}</p>
+                </div>
+              )}
               {[
                 { icon: Mail, label: 'Private Channel', value: 'secure@approved.com' },
                 { icon: User, label: 'Member Services', value: '+1 (305) 555-0198' },

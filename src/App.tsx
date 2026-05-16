@@ -23,6 +23,7 @@ export default function App() {
   const [vehicles, setVehicles] = useState(INITIAL_VEHICLES);
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [bookingVehicle, setBookingVehicle] = useState<{ vehicle: Vehicle; selectedColor?: { label: string; hex: string } } | null>(null);
+  const [selectedInquiry, setSelectedInquiry] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const saved = localStorage.getItem('approved-auth');
@@ -53,7 +54,6 @@ export default function App() {
       return 'Please enter a valid email address.';
     }
 
-    // First check local user store for test accounts
     try {
       const usersModule = await import('./lib/users');
       const valid = usersModule.validateCredentials(email.trim(), password.trim(), 'customer');
@@ -91,7 +91,6 @@ export default function App() {
     if (!username.trim()) return 'Staff username is required.';
     if (!password.trim()) return 'Staff password is required.';
 
-    // First check local user store for test accounts
     try {
       const usersModule = await import('./lib/users');
       const valid = usersModule.validateCredentials(username.trim(), password.trim(), 'staff');
@@ -151,6 +150,12 @@ export default function App() {
       return;
     }
     setPage(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleContact = (service?: string) => {
+    setSelectedInquiry(service);
+    setPage('contact');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -219,21 +224,22 @@ export default function App() {
               {page === 'fleet' && (
                 <FleetPage 
                   vehicles={vehicles} 
-                  onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })} 
-                  onSelect={setSelectedVehicle} 
+                  onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })}
+                  onSelect={setSelectedVehicle}
+                  onInquire={(name) => { setSelectedInquiry(name); setPage('contact'); }}
                 />
               )}
               {page === 'aviation' && (
                 <AviationPage />
               )}
               {page === 'security' && (
-                <SecurityPage />
+                <SecurityPage onContact={handleContact} />
               )}
               {page === 'about' && (
                 <AboutPage />
               )}
               {page === 'contact' && (
-                <ContactPage />
+                <ContactPage selectedService={selectedInquiry} />
               )}
               {page === 'login' && (
                 <LoginPage onCustomerLogin={handleCustomerLogin} onStaffLogin={handleStaffLogin} />

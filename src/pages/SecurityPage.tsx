@@ -4,7 +4,11 @@ import { ShieldCheck, UserCheck, Truck, Lock } from 'lucide-react';
 import { SECURITY_PACKAGES } from '../constants';
 import { cn } from '../lib/utils';
 
-export default function SecurityPage() {
+interface SecurityPageProps {
+  onContact: (service?: string) => void;
+}
+
+export default function SecurityPage({ onContact }: SecurityPageProps) {
   return (
     <div className="bg-black-pure pt-32 pb-24 px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
@@ -56,7 +60,11 @@ export default function SecurityPage() {
 
               <div className="pt-8 border-t border-white/5 flex justify-between items-center">
                  <span className="font-serif text-xl text-white italic">{pkg.price}</span>
-                 <button className="text-[10px] tracking-[0.2em] font-bold text-gold hover:text-white transition-colors uppercase">
+                 <button
+                   type="button"
+                   onClick={() => onContact(pkg.name)}
+                   className="text-[10px] tracking-[0.2em] font-bold text-gold hover:text-white transition-colors uppercase"
+                 >
                     Inquire Now
                  </button>
               </div>
@@ -77,7 +85,11 @@ export default function SecurityPage() {
                     ensuring maximum visibility protection or discrete high-speed transit. 
                     Coordinated by former government-level protection specialists.
                  </p>
-                 <button className="bg-white text-black px-12 py-4 rounded-full text-[11px] tracking-[0.4em] font-bold hover:bg-gold hover:text-white transition-all shadow-2xl">
+                 <button
+                   type="button"
+                   onClick={() => onContact('Presidential Escort')}
+                   className="bg-white text-black px-12 py-4 rounded-full text-[11px] tracking-[0.4em] font-bold hover:bg-gold hover:text-white transition-all shadow-2xl"
+                 >
                     REQUEST CONVOY
                  </button>
               </div>
