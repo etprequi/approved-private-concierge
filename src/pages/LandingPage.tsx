@@ -8,7 +8,7 @@ import { motion } from 'motion/react';
 
 interface LandingPageProps {
   vehicles: Vehicle[];
-  onBook: (v: Vehicle) => void;
+  onBook: (v: Vehicle, color?: { label: string; hex: string }) => void;
   onViewFleet: () => void;
   onContact: () => void;
 }
@@ -45,11 +45,11 @@ export default function LandingPage({ vehicles, onBook, onViewFleet, onContact }
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: idx * 0.1 }}
               >
-                <VehicleCard 
+                 <VehicleCard 
                    vehicle={vehicle} 
                    onSelect={(v) => console.log('Select', v)}
-                   onBook={onBook} 
-                />
+                   onBook={(v, color) => onBook(v, color)} 
+                 />
               </motion.div>
             ))}
           </div>

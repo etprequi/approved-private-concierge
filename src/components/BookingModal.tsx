@@ -5,13 +5,19 @@ import { Vehicle, Addon } from '../types';
 import { ADDONS } from '../constants';
 import { fmtMoney, cn } from '../lib/utils';
 
-interface BookingModalProps {
+interface BookingSelection {
   vehicle: Vehicle;
+  selectedColor?: { label: string; hex: string };
+}
+
+interface BookingModalProps {
+  booking: BookingSelection;
   onClose: () => void;
   onConfirm: (data: any) => void;
 }
 
-export default function BookingModal({ vehicle, onClose, onConfirm }: BookingModalProps) {
+export default function BookingModal({ booking, onClose, onConfirm }: BookingModalProps) {
+  const { vehicle, selectedColor } = booking;
   const [step, setStep] = React.useState(1);
   const [dates, setDates] = React.useState({ start: '', end: '' });
   const [selectedAddons, setSelectedAddons] = React.useState<string[]>([]);
@@ -99,7 +105,9 @@ export default function BookingModal({ vehicle, onClose, onConfirm }: BookingMod
               <img src={vehicle.photo} className="w-full h-full object-cover" />
             </div>
             <h2 className="font-serif text-3xl mb-2">{vehicle.make} {vehicle.model}</h2>
-            <p className="text-silver text-[12px] tracking-[0.2em] uppercase font-light mb-10">{vehicle.year} · {vehicle.color}</p>
+            <p className="text-silver text-[12px] tracking-[0.2em] uppercase font-light mb-10">
+              {vehicle.year} · {selectedColor ? selectedColor.label : vehicle.color}
+            </p>
             
             <div className="space-y-6">
               <div className="flex justify-between items-center text-[12px] font-medium tracking-wide">

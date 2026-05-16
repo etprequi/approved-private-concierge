@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getUsers, createUser, updatePasswordForEmail, AppUser } from '../lib/users';
 import { motion, AnimatePresence } from 'motion/react';
 import { User, LayoutDashboard, Car, Calendar, Users, CreditCard, AlertTriangle, ArrowUpRight, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -243,6 +244,19 @@ export default function AdminPage({ onExit }: AdminPageProps) {
           </div>
         );
       case 'damage':
+              case 'users':
+                const users = getUsers();
+                return (
+                  <div className="space-y-8">
+                    <div className="bg-[#111111] border border-white/5 rounded-3xl p-8">
+                      <h3 className="font-serif text-2xl italic mb-6">User Management</h3>
+                      <UserList users={users} />
+                    </div>
+                    <UserCreateForm onCreate={(u) => {
+                      createUser(u);
+                    }} onReset={(email, pass) => updatePasswordForEmail(email, pass)} />
+                  </div>
+                );
         return (
           <div className="space-y-8">
             <div className="bg-[#111111] border border-white/5 rounded-3xl p-12 text-center">
@@ -316,6 +330,58 @@ export default function AdminPage({ onExit }: AdminPageProps) {
 
           {renderTabContent()}
         </motion.div>
+      </div>
+    </div>
+  );
+}
+
+function UserList({ users }: { users: AppUser[] }) {
+  return (
+    <div className="space-y-4">
+      {users.map(u => (
+        <div key={u.id} className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-between">
+          <div>
+            <p className="text-white font-medium">{u.name || u.username || u.email}</p>
+            <p className="text-dim text-[11px]">{u.role.toUpperCase()} • {u.email || 'no-email'}</p>
+          </div>
+          <div className="text-[11px] text-silver">ID: {u.id.slice(0,8)}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function UserCreateForm({ onCreate, onReset }: { onCreate: (u: { username?: string; email?: string; password: string; role: 'staff' | 'customer'; name?: string }) => void; onReset: (email: string, pass: string) => boolean }) {
+  const [role, setRole] = useState<'staff' | 'customer'>('staff');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetPass, setResetPass] = useState('');
+
+  return (
+    <div className="bg-[#111111] border border-white/5 rounded-3xl p-8">
+      <h4 className="text-[11px] tracking-[0.4em] text-silver font-bold uppercase mb-4">Create New User</h4>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <input value={name} onChange={e => setName(e.target.value)} placeholder="Full name" className="p-3 bg-white/[0.02] border border-white/5 rounded-2xl" />
+        <input value={username} onChange={e => setUsername(e.target.value)} placeholder="username" className="p-3 bg-white/[0.02] border border-white/5 rounded-2xl" />
+        <input value={email} onChange={e => setEmail(e.target.value)} placeholder="email" className="p-3 bg-white/[0.02] border border-white/5 rounded-2xl" />
+        <input value={password} onChange={e => setPassword(e.target.value)} placeholder="password" className="p-3 bg-white/[0.02] border border-white/5 rounded-2xl" />
+      </div>
+      <div className="flex items-center space-x-4 mb-6">
+        <select value={role} onChange={e => setRole(e.target.value as any)} className="p-3 bg-white/[0.02] border border-white/5 rounded-2xl">
+          <option value="staff">Staff</option>
+          <option value="customer">Customer</option>
+        </select>
+        <button onClick={() => { onCreate({ username: username || undefined, email: email || undefined, password: password || 'password', role, name: name || undefined }); setUsername(''); setEmail(''); setPassword(''); setName(''); }} className="bg-gold text-black px-6 py-2 rounded-full">Create</button>
+      </div>
+
+      <h4 className="text-[11px] tracking-[0.4em] text-silver font-bold uppercase mb-4">Reset Password (mock)</h4>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <input value={resetEmail} onChange={e => setResetEmail(e.target.value)} placeholder="user email" className="p-3 bg-white/[0.02] border border-white/5 rounded-2xl" />
+        <input value={resetPass} onChange={e => setResetPass(e.target.value)} placeholder="new password" className="p-3 bg-white/[0.02] border border-white/5 rounded-2xl" />
+        <button onClick={() => { const ok = onReset(resetEmail, resetPass); setResetEmail(''); setResetPass(''); alert(ok ? 'Password updated (mock)' : 'Email not found'); }} className="bg-white/5 text-white px-6 py-2 rounded-full">Reset</button>
       </div>
     </div>
   );

@@ -26,6 +26,7 @@ export default function AdminSidebar({ currentPage, onPageChange, isOpen, onTogg
     { id: 'fleet', label: 'FLEET', icon: Car },
     { id: 'bookings', label: 'BOOKINGS', icon: Calendar },
     { id: 'customers', label: 'CUSTOMERS', icon: Users },
+    { id: 'users', label: 'USERS', icon: Users },
     { id: 'payments', label: 'PAYMENTS', icon: CreditCard },
     { id: 'damage', label: 'DAMAGE LOG', icon: AlertTriangle },
     { id: 'public', label: 'CUSTOMER PORTAL', icon: ArrowUpRight },

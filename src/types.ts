@@ -17,6 +17,7 @@ export interface Vehicle {
   category: Category;
   color: string;
   colorHex: string;
+  colorOptions?: { label: string; hex: string }[];
   dailyRate: number;
   deposit: number;
   seats: number;

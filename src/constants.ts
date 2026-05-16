@@ -55,69 +55,70 @@ export const AVIATION_FLEET: Vehicle[] = [
 ];
 
 export const INITIAL_VEHICLES: Vehicle[] = [
+  // include aviation fleet first
   ...AVIATION_FLEET,
-  { 
-    id: "v1", 
-    make: "Lamborghini", 
-    model: "Urus", 
-    year: 2024, 
-    category: "CARS", 
-    color: "Nero (Black)", 
-    colorHex: "#1a1a1a", 
-    dailyRate: 1800, 
-    deposit: 2000, 
-    seats: 4, 
-    status: "available", 
-    features: ["AWD", "Carbon Fiber Package", "Bang & Olufsen Sound", "Panoramic Roof"], 
-    photo: "https://images.unsplash.com/photo-1621135802920-133df287f89c?w=1200&q=80", 
-    description: "The world's first Super SUV. Raw power meets everyday usability in the most aggressive Lamborghini ever built." 
+  // Lamborghini Urus
+  {
+    id: "v1",
+    make: "Lamborghini",
+    model: "Urus",
+    year: 2024,
+    category: "CARS",
+    color: "Nero (Black)",
+    colorHex: "#1a1a1a",
+    colorOptions: [
+      { label: 'Yellow', hex: '#FFD700' },
+      { label: 'White', hex: '#FFFFFF' }
+    ],
+    dailyRate: 1200,
+    deposit: 2000,
+    seats: 4,
+    status: "available",
+    features: ["AWD", "Carbon Fiber Package", "Bang & Olufsen Sound", "Panoramic Roof"],
+    photo: "https://images.unsplash.com/photo-1621135802920-133df287f89c?w=1200&q=80",
+    description: "The world's first Super SUV. Raw power meets everyday usability in the most aggressive Lamborghini ever built."
   },
-  { 
-    id: "v3", 
-    make: "Ferrari", 
-    model: "488 GTB", 
-    year: 2023, 
-    category: "CARS", 
-    color: "Bianco (White)", 
-    colorHex: "#f5f5f5", 
-    dailyRate: 1500, 
-    deposit: 1800, 
-    seats: 2, 
-    status: "available", 
-    features: ["Twin-Turbo V8", "660HP", "Carbon Ceramic Brakes", "Launch Control"], 
-    photo: "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=1200&q=80", 
-    description: "660 horsepower of pure Italian passion. The Ferrari 488 GTB is a masterpiece of performance engineering." 
+  // Lamborghini Huracan
+  {
+    id: "v2",
+    make: "Lamborghini",
+    model: "Huracan",
+    year: 2023,
+    category: "CARS",
+    color: "Rosso (Red)",
+    colorHex: "#C40000",
+    colorOptions: [
+      { label: 'Red', hex: '#C40000' },
+      { label: 'Black', hex: '#000000' },
+      { label: 'White', hex: '#FFFFFF' }
+    ],
+    dailyRate: 1500,
+    deposit: 2000,
+    seats: 2,
+    status: "available",
+    features: ["V10 Engine", "Magnetic Suspension", "Carbon Ceramic Brakes"],
+    photo: "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=1200&q=80",
+    description: "A razor-sharp supercar delivering uncompromised performance and handling."
   },
-  { 
-    id: "v4", 
-    make: "Rolls-Royce", 
-    model: "Ghost", 
-    year: 2024, 
-    category: "CARS", 
-    color: "Silver (Platinum)", 
-    colorHex: "#C0C0C0", 
-    dailyRate: 2200, 
-    deposit: 3000, 
-    seats: 5, 
-    status: "available", 
-    features: ["V12 Engine", "Starlight Headliner", "Rear Theatre", "Bespoke Audio"], 
-    photo: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&q=80", 
-    description: "The most technologically advanced Rolls-Royce ever created. Effortless everywhere." 
-  },
-  { 
-    id: "v7", 
-    make: "Azimut", 
-    model: "60ft S Collection", 
-    year: 2022, 
-    category: "YACHT", 
-    color: "Arctic White", 
-    colorHex: "#f8f8f8", 
-    dailyRate: 4500, 
-    deposit: 6000, 
-    seats: 12, 
-    status: "available", 
-    features: ["Full Crew", "Master Suite", "Jacuzzi", "Full Kitchen", "Water Toys"], 
-    photo: "https://images.unsplash.com/photo-1540946485063-a40da27545f8?w=1200&q=80", 
-    description: "The ultimate ocean experience. A 60ft Azimut with full crew, jacuzzi, and water toys for up to 12 guests." 
-  },
+  // Rolls-Royce Cullinan
+  {
+    id: "v3",
+    make: "Rolls-Royce",
+    model: "Cullinan",
+    year: 2024,
+    category: "CARS",
+    color: "Black",
+    colorHex: "#000000",
+    colorOptions: [
+      { label: 'Black', hex: '#000000' },
+      { label: 'White', hex: '#FFFFFF' }
+    ],
+    dailyRate: 1500,
+    deposit: 3000,
+    seats: 5,
+    status: "available",
+    features: ["V12 Engine", "Luxury Interior", "Rear Theatre"],
+    photo: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&q=80",
+    description: "A statement of ultimate presence and comfort; the Cullinan is the SUV for the most discerning clients."
+  }
 ];

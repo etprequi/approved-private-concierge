@@ -7,7 +7,7 @@ import { Search } from 'lucide-react';
 
 interface FleetPageProps {
   vehicles: Vehicle[];
-  onBook: (v: Vehicle) => void;
+  onBook: (v: Vehicle, color?: { label: string; hex: string }) => void;
   onSelect: (v: Vehicle) => void;
 }
 
@@ -56,7 +56,7 @@ export default function FleetPage({ vehicles, onBook, onSelect }: FleetPageProps
                 <VehicleCard 
                   vehicle={vehicle} 
                   onSelect={onSelect}
-                  onBook={onBook} 
+                  onBook={(v, color) => onBook(v, color)} 
                 />
               </motion.div>
             ))}

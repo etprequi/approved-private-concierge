@@ -22,7 +22,7 @@ export default function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [vehicles, setVehicles] = useState(INITIAL_VEHICLES);
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
-  const [bookingVehicle, setBookingVehicle] = useState<Vehicle | null>(null);
+  const [bookingVehicle, setBookingVehicle] = useState<{ vehicle: Vehicle; selectedColor?: { label: string; hex: string } } | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem('approved-auth');
@@ -53,6 +53,23 @@ export default function App() {
       return 'Please enter a valid email address.';
     }
 
+    // First check local user store for test accounts
+    try {
+      const usersModule = await import('./lib/users');
+      const valid = usersModule.validateCredentials(email.trim(), password.trim(), 'customer');
+      if (valid) {
+        const authState = { type: 'customer' as const, identifier: email.trim() };
+        setAuth(authState);
+        setIsLoggedIn(true);
+        setIsAdmin(false);
+        setPage('dashboard');
+        localStorage.setItem('approved-auth', JSON.stringify(authState));
+        return undefined;
+      }
+    } catch {
+      // ignore
+    }
+
     if (isFirebaseConfigured) {
       try {
         await signInWithFirebase(email.trim(), password.trim());
@@ -73,6 +90,23 @@ export default function App() {
   const handleStaffLogin = async (username: string, password: string) => {
     if (!username.trim()) return 'Staff username is required.';
     if (!password.trim()) return 'Staff password is required.';
+
+    // First check local user store for test accounts
+    try {
+      const usersModule = await import('./lib/users');
+      const valid = usersModule.validateCredentials(username.trim(), password.trim(), 'staff');
+      if (valid) {
+        const authState = { type: 'staff' as const, identifier: username.trim() };
+        setAuth(authState);
+        setIsLoggedIn(true);
+        setIsAdmin(true);
+        setPage('admin');
+        localStorage.setItem('approved-auth', JSON.stringify(authState));
+        return undefined;
+      }
+    } catch {
+      // ignore
+    }
 
     if (isFirebaseConfigured) {
       try {
@@ -177,7 +211,7 @@ export default function App() {
               {page === 'home' && (
                 <LandingPage 
                   vehicles={vehicles} 
-                  onBook={setBookingVehicle} 
+                  onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })}
                   onViewFleet={() => setPage('fleet')} 
                   onContact={() => setPage('contact')}
                 />
@@ -185,7 +219,7 @@ export default function App() {
               {page === 'fleet' && (
                 <FleetPage 
                   vehicles={vehicles} 
-                  onBook={setBookingVehicle} 
+                  onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })} 
                   onSelect={setSelectedVehicle} 
                 />
               )}
@@ -211,14 +245,13 @@ export default function App() {
 
       <AnimatePresence>
         {bookingVehicle && (
-          <BookingModal 
-            vehicle={bookingVehicle} 
-            onClose={() => setBookingVehicle(null)} 
+          <BookingModal
+            booking={bookingVehicle}
+            onClose={() => setBookingVehicle(null)}
             onConfirm={(data) => {
               console.log('Confirmed:', data);
               setBookingVehicle(null);
-              // In a real app we'd navigate to a success page or show a toast
-              alert("RESERVATION CONFIRMED. Reference: APR-" + Math.floor(Math.random()*1000000));
+              alert("RESERVATION CONFIRMED. Reference: APR-" + Math.floor(Math.random() * 1000000));
             }}
           />
         )}

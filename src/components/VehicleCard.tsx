@@ -7,10 +7,12 @@ import { fmtMoney, cn } from '../lib/utils';
 interface VehicleCardProps {
   vehicle: Vehicle;
   onSelect: (v: Vehicle) => void;
-  onBook: (v: Vehicle) => void;
+  onBook: (v: Vehicle, color?: { label: string; hex: string }) => void;
 }
 
 export default function VehicleCard({ vehicle, onSelect, onBook }: VehicleCardProps) {
+  const [selectedColorIdx, setSelectedColorIdx] = React.useState(0);
+  const badgeColor = vehicle.colorOptions ? vehicle.colorOptions[selectedColorIdx]?.hex ?? vehicle.colorHex : vehicle.colorHex;
   return (
     <motion.div 
       whileHover={{ y: -8 }}
@@ -46,12 +48,30 @@ export default function VehicleCard({ vehicle, onSelect, onBook }: VehicleCardPr
               {vehicle.make} {vehicle.model}
             </h3>
             <p className="text-silver text-[12px] tracking-widest uppercase font-light">
-              {vehicle.year} · {vehicle.color.split(' ')[0]}
+              {vehicle.year} · 
+              {vehicle.colorOptions ? (
+                <span className="inline-flex items-center space-x-3">
+                  {vehicle.colorOptions.map((c, idx) => (
+                    <button
+                      key={c.label}
+                      onClick={() => setSelectedColorIdx(idx)}
+                      aria-label={c.label}
+                      className={cn(
+                        'w-6 h-6 rounded-full border transition-transform transform hover:scale-110',
+                        selectedColorIdx === idx ? 'ring-2 ring-gold/50' : 'border-white/10'
+                      )}
+                      style={{ backgroundColor: c.hex }}
+                    />
+                  ))}
+                </span>
+              ) : (
+                vehicle.color.split(' ')[0]
+              )}
             </p>
           </div>
-          <div className="flex -space-x-1">
-             <div className="w-3 h-3 rounded-full border border-white/20" style={{ backgroundColor: vehicle.colorHex }} />
-          </div>
+           <div className="flex -space-x-1">
+             <div className="w-3 h-3 rounded-full border border-white/20" style={{ backgroundColor: badgeColor }} />
+           </div>
         </div>
 
         <div className="flex justify-between items-end">
@@ -68,7 +88,7 @@ export default function VehicleCard({ vehicle, onSelect, onBook }: VehicleCardPr
                <Info size={18} strokeWidth={1.5} />
              </button>
              <button 
-               onClick={() => onBook(vehicle)}
+               onClick={() => onBook(vehicle, vehicle.colorOptions ? vehicle.colorOptions[selectedColorIdx] : undefined)}
                className="flex items-center space-x-2 bg-white text-black pl-5 pr-4 py-3 rounded-full text-[11px] font-bold tracking-[0.2em] hover:bg-gold hover:text-white transition-all duration-300"
              >
                <span>BOOK</span>
