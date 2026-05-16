@@ -36,7 +36,7 @@ export default function Header({ onNavClick }: HeaderProps) {
   <img 
     src="/images/logo4.png" 
     alt="APPROVED Private Concierge" 
-    className="h-26 md:h-32 w-auto object-contain"
+    className="h-24 md:h-28 w-auto object-contain"
   />
 </div>
 
