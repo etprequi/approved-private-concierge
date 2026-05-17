@@ -57,7 +57,8 @@ export const AVIATION_FLEET: Vehicle[] = [
     seats: 8,
     status: "available",
     features: ["8 Seater", "Two Honeywell TFE731-20AR TurboFan Engines", "Private Cabin", "High-Speed Cruise"],
-    photo: "/images/Learjet 45.jpg",
+    photo: "/images/Learjet_45.webp",
+    photos: ["/images/Learjet_45.webp", "/images/Learjet_45_In.webp"],
     description: "The Learjet 45 offers sleek performance and eight-seat comfort, powered by twin Honeywell TFE731-20AR turbofan engines."
   },
   {
@@ -73,8 +74,8 @@ export const AVIATION_FLEET: Vehicle[] = [
     seats: 10,
     status: "available",
     features: ["10 Seater", "Two Honeywell HTF7350 Turbofan Engines", "Global Range", "Executive Cabin"],
-    photo: "/images/Bombardier Challenger.jpg",
-    photos: ["/images/Bombardier Challenger.jpg", "/images/Challenger_In.jpg"],
+    photo: "/images/Bombardier Challenger.webp",
+    photos: ["/images/Bombardier Challenger.webp", "/images/Challenger_In.webp"],
     description: "The Challenger 350 is a ten-seat super-midsize jet powered by twin Honeywell HTF7350 turbofan engines for premium intercontinental travel."
   }
 ];
