@@ -298,7 +298,7 @@ export default function AdminPage({ onExit }: AdminPageProps) {
         onToggle={() => setSidebarOpen(!sidebarOpen)}
       />
       
-      <div className="flex-1 overflow-y-auto p-12 custom-scrollbar transition-all duration-500">
+      <div className="flex-1 overflow-y-auto p-4 md:p-12 custom-scrollbar transition-all duration-500">
         <motion.div
            key={currentPage}
            initial={{ opacity: 0, y: 10 }}
