@@ -192,13 +192,14 @@ export default function App() {
             <main>
               {page === 'home' && (
                 <LandingPage 
-                  vehicles={vehicles} 
-                  onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })}
-                  onViewFleet={() => { setFleetFilter('CARS'); setPage('fleet'); }}
-                  onViewAircraft={() => { setFleetFilter('JET'); setPage('fleet'); }}
-                  onContact={() => setPage('contact')}
-                  onInquire={(name) => { setSelectedInquiry(name); setPage('contact'); }}
-                />
+  vehicles={vehicles} 
+  onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })}
+  onViewFleet={() => { setFleetFilter('CARS'); setPage('fleet'); }} 
+  onViewAircraft={() => { setFleetFilter('JET'); setPage('fleet'); }}
+  onContact={() => setPage('contact')}
+  onInquire={(name) => { setSelectedInquiry(name); setPage('contact'); }}
+  onNav={(p) => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+/>
               )}
               {page === 'fleet' && (
                 <FleetPage 
