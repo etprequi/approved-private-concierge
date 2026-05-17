@@ -193,8 +193,8 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     seats: 14,
     status: "available",
     features: ["Full Crew", "Jacuzzi", "Flybridge Deck", "Master Suite", "Water Toys"],
-    photo: "/images/Azimut_85.jpg",
-    photos: ["/images/Azimut_85.jpg", "/images/Azimut85_In.jpg"],
+    photo: "/images/Azimut_85.webp",
+    photos: ["/images/Azimut_85.webp", "/images/Azimut85_In.webp"],
     description: "The Azimut 85ft Flybridge is the pinnacle of open-sea luxury — featuring a jacuzzi, full crew, and a stunning flybridge deck for up to 14 guests."
   },
   {
@@ -210,8 +210,8 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     seats: 16,
     status: "available",
     features: ["Full Crew", "Master Suite", "Multiple Cabins", "Jacuzzi", "Water Toys", "Gourmet Kitchen"],
-    photo: "/images/Azimut_100.jpg",
-    photos: ["/images/Azimut_100.jpg", "/images/Azimut100_In.jpg"],
+    photo: "/images/Azimut_100.webp",
+    photos: ["/images/Azimut_100.webp", "/images/Azimut100_In.webp"],
     description: "The Azimut 100ft Grande is our flagship superyacht — an extraordinary vessel delivering world-class luxury for up to 16 guests with full crew and every amenity."
   }
 ];
