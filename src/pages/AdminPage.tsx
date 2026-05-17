@@ -12,7 +12,7 @@ interface AdminPageProps {
   onVehiclesChange: (v: Vehicle[]) => void;
 }
 
-export default function AdminPage({ onExit, vehicles, onVehiclesChange }: AdminPageProps) {
+export default function AdminPage({ onExit, vehicles = [], onVehiclesChange }: AdminPageProps) {
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null);
