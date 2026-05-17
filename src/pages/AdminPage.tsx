@@ -1,3 +1,5 @@
+import { Vehicle } from '../types';
+import { INITIAL_VEHICLES } from '../constants';
 import React, { useState } from 'react';
 import { getUsers, createUser, updatePasswordForEmail, AppUser } from '../lib/users';
 import { motion, AnimatePresence } from 'motion/react';
@@ -7,9 +9,11 @@ import AdminSidebar from '../components/AdminSidebar';
 
 interface AdminPageProps {
   onExit: () => void;
+  vehicles: Vehicle[];
+  onVehiclesChange: (v: Vehicle[]) => void;
 }
 
-export default function AdminPage({ onExit }: AdminPageProps) {
+export default function AdminPage({ onExit, vehicles, onVehiclesChange }: AdminPageProps) {
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -53,47 +57,57 @@ export default function AdminPage({ onExit }: AdminPageProps) {
           </div>
         );
       case 'fleet':
-        return (
-          <div className="space-y-8">
-            <div className="bg-[#111111] border border-white/5 rounded-3xl overflow-hidden">
-               <div className="p-8 border-b border-white/5 flex justify-between items-center">
-                  <h3 className="font-serif text-2xl italic">Vehicle & Jet Strategy</h3>
-                  <button className="bg-gold text-white px-8 py-2 rounded-full text-[10px] font-bold tracking-[0.2em] hover:bg-white hover:text-black transition-all">
-                    + MANIFEST UNIT
+  return (
+    <div className="space-y-8">
+      {/* Add Vehicle Form */}
+      <div className="bg-[#111111] border border-white/5 rounded-3xl p-8">
+        <h3 className="font-serif text-2xl italic mb-6">Add New Vehicle</h3>
+        <AddVehicleForm onAdd={(v) => onVehiclesChange([...vehicles, v])} />
+      </div>
+
+      {/* Vehicle List */}
+      <div className="bg-[#111111] border border-white/5 rounded-3xl overflow-hidden">
+        <div className="p-8 border-b border-white/5">
+          <h3 className="font-serif text-2xl italic">Fleet Management</h3>
+        </div>
+        <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {vehicles.map((v) => (
+            <div key={v.id} className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden group">
+              <div className="relative h-40">
+                <img src={v.photo} alt={v.make} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                <div className="absolute bottom-3 left-4">
+                  <span className="text-[9px] tracking-[0.3em] uppercase px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white">{v.category}</span>
+                </div>
+              </div>
+              <div className="p-5 flex justify-between items-start">
+                <div>
+                  <p className="text-white font-medium">{v.make} {v.model}</p>
+                  <p className="text-dim text-[10px] tracking-widest uppercase mt-1">{v.year} · {v.seats} seats</p>
+                  {v.dailyRate > 0 && <p className="text-gold text-[11px] mt-1">${v.dailyRate}/day</p>}
+                  {v.dailyRate === 0 && <p className="text-gold font-serif italic text-[13px] mt-1">Inquire</p>}
+                </div>
+                <div className="flex flex-col space-y-2">
+                  <span className={cn(
+                    "text-[9px] px-3 py-1 rounded-full font-bold tracking-widest uppercase",
+                    v.status === 'available' ? 'bg-green-400/10 text-green-400' :
+                    v.status === 'booked' ? 'bg-gold/10 text-gold' :
+                    'bg-red-400/10 text-red-400'
+                  )}>{v.status}</span>
+                  <button
+                    onClick={() => onVehiclesChange(vehicles.filter(x => x.id !== v.id))}
+                    className="text-[9px] tracking-[0.2em] font-bold text-red-400 hover:text-white transition-colors uppercase text-right"
+                  >
+                    REMOVE
                   </button>
-               </div>
-               <div className="p-8">
-                  <table className="w-full text-left">
-                    <thead>
-                      <tr className="text-[10px] tracking-[0.3em] text-dim uppercase border-b border-white/5">
-                        <th className="pb-6 px-4">Asset</th>
-                        <th className="pb-6 px-4">Status</th>
-                        <th className="pb-6 px-4">Utilization</th>
-                        <th className="pb-6 px-4 text-right">Monitoring</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-[12px] tracking-wide">
-                      {['Lamborghini Urus', 'Rolls-Royce Cullinan', 'Learjet 45', 'Bombardier Challenger 350'].map((asset, i) => (
-                        <tr key={i} className="border-b border-white/[0.02] hover:bg-white/[0.01] transition-colors group">
-                           <td className="py-6 px-4">
-                              <p className="text-white font-medium mb-1">{asset}</p>
-                              <p className="text-dim text-[10px] tracking-widest uppercase">Serial: {1000 + i}</p>
-                           </td>
-                           <td className="py-6 px-4">
-                              <span className="px-3 py-1 rounded-full bg-green-400/10 text-green-400 text-[9px] font-bold tracking-widest uppercase">Online</span>
-                           </td>
-                           <td className="py-6 px-4 text-silver italic">92% Month-to-Date</td>
-                           <td className="py-6 px-4 text-right">
-                              <button className="text-gold hover:text-white transition-colors text-[10px] tracking-[0.2em] font-bold">TELEMETRY</button>
-                           </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-               </div>
+                </div>
+              </div>
             </div>
-          </div>
-        );
+          ))}
+        </div>
+      </div>
+    </div>
+  );
       case 'bookings':
         return (
           <div className="space-y-8">
@@ -383,6 +397,73 @@ function UserCreateForm({ onCreate, onReset }: { onCreate: (u: { username?: stri
         <input value={resetPass} onChange={e => setResetPass(e.target.value)} placeholder="new password" className="p-3 bg-white/[0.02] border border-white/5 rounded-2xl" />
         <button onClick={() => { const ok = onReset(resetEmail, resetPass); setResetEmail(''); setResetPass(''); alert(ok ? 'Password updated (mock)' : 'Email not found'); }} className="bg-white/5 text-white px-6 py-2 rounded-full">Reset</button>
       </div>
+    </div>
+  );
+}
+function AddVehicleForm({ onAdd }: { onAdd: (v: Vehicle) => void }) {
+  const [form, setForm] = React.useState({
+    make: '', model: '', year: new Date().getFullYear(), category: 'CARS' as 'CARS' | 'YACHT' | 'JET',
+    color: '', colorHex: '#000000', dailyRate: 0, deposit: 0, seats: 2,
+    status: 'available' as 'available' | 'booked' | 'maintenance',
+    photo: '', description: '', features: ''
+  });
+
+  const handleAdd = () => {
+    if (!form.make || !form.model || !form.photo) {
+      alert('Please fill in make, model and photo URL.');
+      return;
+    }
+    const newVehicle: Vehicle = {
+      id: `v-${Date.now()}`,
+      make: form.make,
+      model: form.model,
+      year: form.year,
+      category: form.category,
+      color: form.color || 'Default',
+      colorHex: form.colorHex,
+      dailyRate: form.dailyRate,
+      deposit: form.deposit,
+      seats: form.seats,
+      status: form.status,
+      photo: form.photo,
+      description: form.description,
+      features: form.features.split(',').map(f => f.trim()).filter(Boolean),
+    };
+    onAdd(newVehicle);
+    setForm({ make: '', model: '', year: new Date().getFullYear(), category: 'CARS', color: '', colorHex: '#000000', dailyRate: 0, deposit: 0, seats: 2, status: 'available', photo: '', description: '', features: '' });
+  };
+
+  const input = "w-full bg-white/[0.02] border border-white/5 rounded-2xl p-3 text-[11px] tracking-wide outline-none focus:border-gold/50 text-white placeholder:text-dim";
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <input className={input} placeholder="Make (e.g. Ferrari)" value={form.make} onChange={e => setForm({...form, make: e.target.value})} />
+      <input className={input} placeholder="Model (e.g. 488 GTB)" value={form.model} onChange={e => setForm({...form, model: e.target.value})} />
+      <input className={input} placeholder="Year" type="number" value={form.year} onChange={e => setForm({...form, year: +e.target.value})} />
+      <select className={input} value={form.category} onChange={e => setForm({...form, category: e.target.value as any})}>
+        <option value="CARS">CARS</option>
+        <option value="YACHT">YACHT</option>
+        <option value="JET">JET</option>
+      </select>
+      <input className={input} placeholder="Color name (e.g. Rosso Red)" value={form.color} onChange={e => setForm({...form, color: e.target.value})} />
+      <div className="flex items-center space-x-3 bg-white/[0.02] border border-white/5 rounded-2xl p-3">
+        <input type="color" value={form.colorHex} onChange={e => setForm({...form, colorHex: e.target.value})} className="w-8 h-8 rounded cursor-pointer bg-transparent border-none" />
+        <span className="text-[11px] text-dim">Color Hex</span>
+      </div>
+      <input className={input} placeholder="Daily Rate ($0 for Inquire)" type="number" value={form.dailyRate} onChange={e => setForm({...form, dailyRate: +e.target.value})} />
+      <input className={input} placeholder="Deposit ($)" type="number" value={form.deposit} onChange={e => setForm({...form, deposit: +e.target.value})} />
+      <input className={input} placeholder="Seats" type="number" value={form.seats} onChange={e => setForm({...form, seats: +e.target.value})} />
+      <select className={input} value={form.status} onChange={e => setForm({...form, status: e.target.value as any})}>
+        <option value="available">Available</option>
+        <option value="booked">Booked</option>
+        <option value="maintenance">Maintenance</option>
+      </select>
+      <input className={input} placeholder="Photo URL or /images/filename.jpg" value={form.photo} onChange={e => setForm({...form, photo: e.target.value})} />
+      <input className={input} placeholder="Features (comma separated)" value={form.features} onChange={e => setForm({...form, features: e.target.value})} />
+      <textarea className={cn(input, "md:col-span-2 lg:col-span-3 min-h-[80px] resize-none")} placeholder="Description" value={form.description} onChange={e => setForm({...form, description: e.target.value})} />
+      <button onClick={handleAdd} className="md:col-span-2 lg:col-span-3 bg-gold text-black py-4 rounded-2xl text-[11px] font-bold tracking-[0.3em] uppercase hover:bg-white transition-all">
+        ADD TO FLEET
+      </button>
     </div>
   );
 }
