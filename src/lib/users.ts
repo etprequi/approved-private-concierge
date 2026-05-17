@@ -17,7 +17,7 @@ function readStore(): AppUser[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      const defaultAdmin: AppUser = { id: uuidv4(), username: 'admin', email: 'admin@approved.com', password: 'admin', role: 'staff', name: 'Super Admin' };
+      const defaultAdmin: AppUser = { id: uuidv4(), username: 'admin', email: 'approvedprivateconcierge@gmail.com', password: 'admin', role: 'staff', name: 'Super Admin' };
       localStorage.setItem(STORAGE_KEY, JSON.stringify([defaultAdmin]));
       return [defaultAdmin];
     }

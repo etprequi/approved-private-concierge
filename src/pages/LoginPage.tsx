@@ -102,7 +102,7 @@ export default function LoginPage({ onCustomerLogin, onStaffLogin }: LoginPagePr
                   required
                   value={customerEmail}
                   onChange={(e) => setCustomerEmail(e.target.value)}
-                  placeholder="you@approved.com"
+                  placeholder="approvedprivateconcierge@gmail.com"
                   className="w-full bg-white/[0.03] border border-white/5 py-4 px-5 rounded-2xl text-[11px] tracking-[0.2em] outline-none focus:border-gold/50"
                 />
               </div>

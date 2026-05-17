@@ -53,7 +53,7 @@ export default function ContactPage({ selectedService }: ContactPageProps) {
                 </div>
               )}
               {[
-                { icon: Mail, label: 'Private Channel', value: 'secure@approved.com' },
+                { icon: Mail, label: 'Private Channel', value: 'approvedprivateconcierge@gmail.com' },
                 { icon: User, label: 'Member Services', value: '+1 (305) 555-0198' },
                 { icon: MessageSquare, label: 'Response Window', value: 'Under 2 business hours' },
               ].map((item) => (

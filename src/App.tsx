@@ -10,6 +10,10 @@ import SecurityPage from './pages/SecurityPage';
 import AboutPage from './pages/AboutPage';
 import LoginPage from './pages/LoginPage';
 import ContactPage from './pages/ContactPage';
+import TermsPage from './pages/TermsPage';
+import PrivacyPage from './pages/PrivacyPage';
+import ConductPage from './pages/ConductPage';
+import ConfidentialityPage from './pages/ConfidentialityPage';
 import { signInWithFirebase, signOutFirebase, isFirebaseConfigured } from './lib/firebase';
 import { INITIAL_VEHICLES } from './constants';
 import { Vehicle } from './types';
@@ -24,7 +28,7 @@ export default function App() {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [bookingVehicle, setBookingVehicle] = useState<{ vehicle: Vehicle; selectedColor?: { label: string; hex: string } } | null>(null);
   const [selectedInquiry, setSelectedInquiry] = useState<string | undefined>(undefined);
-  const [fleetFilter, setFleetFilter] = useState('ALL');
+ const [fleetFilter, setFleetFilter] = useState('CARS');
 
   useEffect(() => {
     const saved = localStorage.getItem('approved-auth');
@@ -45,6 +49,18 @@ export default function App() {
     } catch {
       localStorage.removeItem('approved-auth');
     }
+  }, []);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      // @ts-ignore
+      const id = (e as CustomEvent).detail as string;
+      if (!id) return;
+      setPage(id);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    window.addEventListener('approved-nav', handler as EventListener);
+    return () => window.removeEventListener('approved-nav', handler as EventListener);
   }, []);
 
   const handleCustomerLogin = async (email: string, password: string) => {
@@ -178,7 +194,7 @@ export default function App() {
                 <LandingPage 
                   vehicles={vehicles} 
                   onBook={(v, color) => setBookingVehicle({ vehicle: v, selectedColor: color })}
-                  onViewFleet={() => { setFleetFilter('ALL'); setPage('fleet'); }} 
+                  onViewFleet={() => { setFleetFilter('CARS'); setPage('fleet'); }}
                   onViewAircraft={() => { setFleetFilter('JET'); setPage('fleet'); }}
                   onContact={() => setPage('contact')}
                   onInquire={(name) => { setSelectedInquiry(name); setPage('contact'); }}
@@ -194,6 +210,10 @@ export default function App() {
                 />
               )}
               {page === 'aviation' && <AviationPage />}
+              {page === 'terms' && <TermsPage />}
+              {page === 'privacy' && <PrivacyPage />}
+              {page === 'conduct' && <ConductPage />}
+              {page === 'confidentiality' && <ConfidentialityPage />}
               {page === 'security' && <SecurityPage onContact={handleContact} />}
               {page === 'about' && <AboutPage />}
               {page === 'contact' && <ContactPage selectedService={selectedInquiry} />}
