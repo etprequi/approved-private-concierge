@@ -1,5 +1,5 @@
 import { Vehicle } from '../types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   getUsers,
   createUser,
@@ -30,10 +30,32 @@ interface AdminPageProps {
 export default function AdminPage({
   onExit,
   vehicles,
-  onVehiclesChange,
 }: AdminPageProps) {
-  const [currentPage, setCurrentPage] = useState('dashboard');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [currentPage, setCurrentPage] =
+    useState('dashboard');
+
+  const [sidebarOpen, setSidebarOpen] =
+    useState(true);
+
+  // PERSISTENT VEHICLES
+  const [fleetVehicles, setFleetVehicles] =
+    useState<Vehicle[]>(() => {
+      const saved =
+        localStorage.getItem('fleetVehicles');
+
+      if (saved) {
+        return JSON.parse(saved);
+      }
+
+      return vehicles;
+    });
+
+  useEffect(() => {
+    localStorage.setItem(
+      'fleetVehicles',
+      JSON.stringify(fleetVehicles)
+    );
+  }, [fleetVehicles]);
 
   React.useEffect(() => {
     if (currentPage === 'public') {
@@ -50,9 +72,9 @@ export default function AdminPage({
   ) => (
     <div
       key={label}
-      className="bg-[#111111] border border-white/5 p-8 rounded-3xl group hover:border-gold/30 transition-all duration-500"
+      className="bg-[#111111] border border-white/5 p-8 rounded-3xl"
     >
-      <span className="text-[10px] tracking-[0.3em] text-silver font-bold block mb-4 uppercase group-hover:text-gold transition-colors">
+      <span className="text-[10px] tracking-[0.3em] text-silver font-bold block mb-4 uppercase">
         {label}
       </span>
 
@@ -80,7 +102,7 @@ export default function AdminPage({
 
               {renderStat(
                 'ACTIVE FLEET',
-                '32 UNITS',
+                `${fleetVehicles.length} UNITS`,
                 '88% UTILIZATION'
               )}
 
@@ -97,24 +119,19 @@ export default function AdminPage({
               )}
             </div>
 
-            <div className="bg-[#111111] border border-white/5 rounded-3xl p-12 min-h-[400px] flex flex-col items-center justify-center text-center">
-              <div className="w-20 h-20 rounded-full border border-white/5 flex items-center justify-center mb-8 relative">
-                <div className="absolute inset-0 rounded-full border border-gold/20 animate-ping" />
-
-                <LayoutDashboard
-                  className="text-silver"
-                  size={28}
-                  strokeWidth={1}
-                />
-              </div>
+            <div className="bg-[#111111] border border-white/5 rounded-3xl p-12 text-center">
+              <LayoutDashboard
+                className="text-gold mx-auto mb-6"
+                size={42}
+                strokeWidth={1}
+              />
 
               <h2 className="font-serif text-3xl italic text-white mb-4">
                 Command Center Active
               </h2>
 
-              <p className="text-silver text-[13px] tracking-widest uppercase font-light max-w-sm leading-relaxed mb-10">
-                Real-time telemetry and management systems are
-                fully synchronized for your oversight.
+              <p className="text-silver text-[13px] tracking-widest uppercase">
+                Real-time fleet management enabled.
               </p>
             </div>
           </div>
@@ -123,6 +140,7 @@ export default function AdminPage({
       case 'fleet':
         return (
           <div className="space-y-8">
+            {/* ADD VEHICLE */}
             <div className="bg-[#111111] border border-white/5 rounded-3xl p-8">
               <h3 className="font-serif text-2xl italic mb-6">
                 Add New Vehicle
@@ -130,11 +148,15 @@ export default function AdminPage({
 
               <AddVehicleForm
                 onAdd={(v) =>
-                  onVehiclesChange([...vehicles, v])
+                  setFleetVehicles([
+                    ...fleetVehicles,
+                    v,
+                  ])
                 }
               />
             </div>
 
+            {/* VEHICLE LIST */}
             <div className="bg-[#111111] border border-white/5 rounded-3xl overflow-hidden">
               <div className="p-8 border-b border-white/5">
                 <h3 className="font-serif text-2xl italic">
@@ -143,7 +165,7 @@ export default function AdminPage({
               </div>
 
               <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {vehicles.map((v) => (
+                {fleetVehicles.map((v) => (
                   <div
                     key={v.id}
                     className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden"
@@ -173,7 +195,7 @@ export default function AdminPage({
                             ${v.dailyRate}/day
                           </p>
                         ) : (
-                          <p className="text-gold font-serif italic text-[13px] mt-1">
+                          <p className="text-gold italic text-[13px] mt-1">
                             Inquire
                           </p>
                         )}
@@ -195,15 +217,16 @@ export default function AdminPage({
 
                         <button
                           onClick={() =>
-                            onVehiclesChange(
-                              vehicles.filter(
-                                (x) => x.id !== v.id
+                            setFleetVehicles(
+                              fleetVehicles.filter(
+                                (x) =>
+                                  x.id !== v.id
                               )
                             )
                           }
-                          className="text-[9px] tracking-[0.2em] font-bold text-red-400 hover:text-white transition-colors uppercase text-right"
+                          className="text-red-400 text-[10px] uppercase tracking-widest hover:text-white"
                         >
-                          REMOVE
+                          Remove
                         </button>
                       </div>
                     </div>
@@ -232,7 +255,10 @@ export default function AdminPage({
                 createUser(u);
               }}
               onReset={(email, pass) =>
-                updatePasswordForEmail(email, pass)
+                updatePasswordForEmail(
+                  email,
+                  pass
+                )
               }
             />
           </div>
@@ -241,93 +267,59 @@ export default function AdminPage({
 
       case 'payments':
         return (
-          <div className="space-y-8">
-            <div className="bg-[#111111] border border-white/5 rounded-3xl p-12 text-center">
-              <CreditCard
-                className="text-gold mx-auto mb-6"
-                size={40}
-                strokeWidth={1}
-              />
+          <div className="bg-[#111111] border border-white/5 rounded-3xl p-12 text-center">
+            <CreditCard
+              className="text-gold mx-auto mb-6"
+              size={40}
+              strokeWidth={1}
+            />
 
-              <h3 className="font-serif text-3xl italic text-white mb-4">
-                Payments & Revenue
-              </h3>
-
-              <p className="text-silver text-[13px] tracking-widest uppercase font-light">
-                Stripe Elite processing active.
-              </p>
-            </div>
+            <h3 className="font-serif text-3xl italic text-white mb-4">
+              Payments & Revenue
+            </h3>
           </div>
         );
 
       case 'customers':
         return (
-          <div className="space-y-8">
-            <div className="bg-[#111111] border border-white/5 rounded-3xl p-12 text-center">
-              <Users
-                className="text-gold mx-auto mb-6"
-                size={40}
-                strokeWidth={1}
-              />
+          <div className="bg-[#111111] border border-white/5 rounded-3xl p-12 text-center">
+            <Users
+              className="text-gold mx-auto mb-6"
+              size={40}
+              strokeWidth={1}
+            />
 
-              <h3 className="font-serif text-3xl italic text-white mb-4">
-                Customer Relations
-              </h3>
-
-              <p className="text-silver text-[13px] tracking-widest uppercase font-light">
-                Manage high-profile clientele and retention
-                metrics.
-              </p>
-            </div>
+            <h3 className="font-serif text-3xl italic text-white mb-4">
+              Customer Relations
+            </h3>
           </div>
         );
 
       case 'damage':
         return (
-          <div className="space-y-8">
-            <div className="bg-[#111111] border border-white/5 rounded-3xl p-12 text-center">
-              <AlertTriangle
-                className="text-gold mx-auto mb-6"
-                size={40}
-                strokeWidth={1}
-              />
+          <div className="bg-[#111111] border border-white/5 rounded-3xl p-12 text-center">
+            <AlertTriangle
+              className="text-gold mx-auto mb-6"
+              size={40}
+              strokeWidth={1}
+            />
 
-              <h3 className="font-serif text-3xl italic text-white mb-4">
-                Integrity Reports
-              </h3>
+            <h3 className="font-serif text-3xl italic text-white mb-4">
+              Integrity Reports
+            </h3>
 
-              <p className="text-silver text-[13px] tracking-widest uppercase font-light max-w-sm mx-auto mb-12">
-                Zero active incident reports. The fleet
-                maintains 100% operational integrity.
-              </p>
-
-              <button className="bg-white/5 border border-white/10 text-white px-10 py-3 rounded-full text-[10px] font-bold tracking-[0.2em] hover:bg-red-400/10 hover:text-red-400 hover:border-red-400/30 transition-all uppercase">
-                File Incident Report
-              </button>
-            </div>
+            <p className="text-silver text-[13px] tracking-widest uppercase">
+              Zero active incident reports.
+            </p>
           </div>
         );
 
       default:
         return (
-          <div className="bg-[#111111] border border-white/5 rounded-3xl overflow-hidden">
-            <div className="p-8 border-b border-white/5 flex justify-between items-center">
-              <h3 className="font-serif text-2xl italic capitalize">
-                {currentPage} Management
-              </h3>
-
-              <button className="text-silver hover:text-white transition-colors">
-                <ArrowUpRight size={20} />
-              </button>
-            </div>
-
-            <div className="p-12 text-center">
-              <p className="text-dim font-serif italic text-2xl mb-4">
-                Module accessing secure archives...
-              </p>
-
-              <div className="w-12 h-[1px] bg-gold/30 mx-auto" />
-            </div>
+          <div className="bg-[#111111] border border-white/5 rounded-3xl p-12 text-center">
+            <p className="text-dim font-serif italic text-2xl">
+              Module loading...
+            </p>
           </div>
         );
     }
@@ -344,7 +336,7 @@ export default function AdminPage({
         }
       />
 
-      <div className="flex-1 overflow-y-auto p-4 md:p-12 custom-scrollbar transition-all duration-500">
+      <div className="flex-1 overflow-y-auto p-4 md:p-12">
         <motion.div
           key={currentPage}
           initial={{ opacity: 0, y: 10 }}
@@ -357,14 +349,14 @@ export default function AdminPage({
                 {currentPage}
               </h1>
 
-              <p className="text-silver text-[12px] tracking-widest uppercase font-light">
+              <p className="text-silver text-[12px] tracking-widest uppercase">
                 Global Hub · Management Console
               </p>
             </div>
 
             <div className="flex items-center space-x-8">
               <div className="text-right hidden md:block">
-                <p className="text-white text-[12px] font-bold tracking-[0.1em]">
+                <p className="text-white text-[12px] font-bold">
                   ALEXANDER VANCE
                 </p>
 
@@ -373,8 +365,11 @@ export default function AdminPage({
                 </p>
               </div>
 
-              <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-white">
-                <User size={22} strokeWidth={1} />
+              <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center">
+                <User
+                  size={22}
+                  strokeWidth={1}
+                />
               </div>
             </div>
           </header>
@@ -386,7 +381,11 @@ export default function AdminPage({
   );
 }
 
-function UserList({ users }: { users: AppUser[] }) {
+function UserList({
+  users,
+}: {
+  users: AppUser[];
+}) {
   return (
     <div className="space-y-4">
       {users.map((u) => (
@@ -396,7 +395,9 @@ function UserList({ users }: { users: AppUser[] }) {
         >
           <div>
             <p className="text-white font-medium">
-              {u.name || u.username || u.email}
+              {u.name ||
+                u.username ||
+                u.email}
             </p>
 
             <p className="text-dim text-[11px]">
@@ -417,27 +418,19 @@ function UserList({ users }: { users: AppUser[] }) {
 function UserCreateForm({
   onCreate,
   onReset,
-}: {
-  onCreate: (u: {
-    username?: string;
-    email?: string;
-    password: string;
-    role: 'staff' | 'customer';
-    name?: string;
-  }) => void;
+}: any) {
+  const [role, setRole] =
+    useState('staff');
 
-  onReset: (
-    email: string,
-    pass: string
-  ) => boolean;
-}) {
-  const [role, setRole] = useState<
-    'staff' | 'customer'
-  >('staff');
+  const [username, setUsername] =
+    useState('');
 
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] =
+    useState('');
+
+  const [password, setPassword] =
+    useState('');
+
   const [name, setName] = useState('');
 
   return (
@@ -488,24 +481,27 @@ function UserCreateForm({
         <select
           value={role}
           onChange={(e) =>
-            setRole(e.target.value as any)
+            setRole(e.target.value)
           }
           className="p-3 bg-white/[0.02] border border-white/5 rounded-2xl"
         >
-          <option value="staff">Staff</option>
-          <option value="customer">Customer</option>
+          <option value="staff">
+            Staff
+          </option>
+
+          <option value="customer">
+            Customer
+          </option>
         </select>
 
         <button
           onClick={() => {
             onCreate({
-              username:
-                username || undefined,
-              email: email || undefined,
-              password:
-                password || 'password',
+              username,
+              email,
+              password,
               role,
-              name: name || undefined,
+              name,
             });
 
             setUsername('');
@@ -527,11 +523,14 @@ function AddVehicleForm({
 }: {
   onAdd: (v: Vehicle) => void;
 }) {
-  const [form, setForm] = React.useState({
+  const [form, setForm] = useState({
     make: '',
     model: '',
     year: new Date().getFullYear(),
-    category: 'CARS' as 'CARS' | 'YACHT' | 'JET',
+    category: 'CARS' as
+      | 'CARS'
+      | 'YACHT'
+      | 'JET',
     color: '',
     colorHex: '#000000',
     dailyRate: 0,
@@ -546,11 +545,19 @@ function AddVehicleForm({
     features: '',
   });
 
+  const input =
+    'w-full bg-white/[0.02] border border-white/5 rounded-2xl p-3 text-white';
+
   const handleAdd = () => {
-    if (!form.make || !form.model || !form.photo) {
+    if (
+      !form.make ||
+      !form.model ||
+      !form.photo
+    ) {
       alert(
-        'Please fill in make, model and photo URL.'
+        'Please fill in make, model and photo.'
       );
+
       return;
     }
 
@@ -560,7 +567,7 @@ function AddVehicleForm({
       model: form.model,
       year: form.year,
       category: form.category,
-      color: form.color || 'Default',
+      color: form.color,
       colorHex: form.colorHex,
       dailyRate: form.dailyRate,
       deposit: form.deposit,
@@ -575,14 +582,94 @@ function AddVehicleForm({
     };
 
     onAdd(newVehicle);
+
+    setForm({
+      make: '',
+      model: '',
+      year: new Date().getFullYear(),
+      category: 'CARS',
+      color: '',
+      colorHex: '#000000',
+      dailyRate: 0,
+      deposit: 0,
+      seats: 2,
+      status: 'available',
+      photo: '',
+      description: '',
+      features: '',
+    });
   };
 
   return (
-    <button
-      onClick={handleAdd}
-      className="bg-gold text-black px-6 py-2 rounded-full"
-    >
-      ADD VEHICLE
-    </button>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <input
+        className={input}
+        placeholder="Make"
+        value={form.make}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            make: e.target.value,
+          })
+        }
+      />
+
+      <input
+        className={input}
+        placeholder="Model"
+        value={form.model}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            model: e.target.value,
+          })
+        }
+      />
+
+      <input
+        className={input}
+        type="number"
+        placeholder="Year"
+        value={form.year}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            year: +e.target.value,
+          })
+        }
+      />
+
+      <input
+        className={input}
+        placeholder="Photo URL"
+        value={form.photo}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            photo: e.target.value,
+          })
+        }
+      />
+
+      <input
+        className={input}
+        type="number"
+        placeholder="Daily Rate"
+        value={form.dailyRate}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            dailyRate: +e.target.value,
+          })
+        }
+      />
+
+      <button
+        onClick={handleAdd}
+        className="bg-gold text-black py-3 rounded-2xl uppercase font-bold"
+      >
+        Add To Fleet
+      </button>
+    </div>
   );
 }
