@@ -44,14 +44,43 @@ export const SECURITY_PACKAGES: SecurityPackage[] = [
 ];
 
 export const AVIATION_FLEET: Vehicle[] = [
-  { id: "j1", make: "Learjet", model: "45", year: 2023, category: "JET", color: "Pearl White", colorHex: "#F5F5F5", dailyRate: 0, deposit: 0, seats: 8, status: "available", features: ["8 Seater", "Two Honeywell TFE731-20AR TurboFan Engines", "Private Cabin", "High-Speed Cruise"], photo: "/images/Learjet 45.jpg", description: "The Learjet 45 offers sleek performance and eight-seat comfort, powered by twin Honeywell TFE731-20AR turbofan engines." },
-  { id: "j2", make: "Bombardier", model: "Challenger 350", year: 2023, category: "JET", color: "Obsidian Black", colorHex: "#000000", dailyRate: 0, deposit: 0, seats: 10, status: "available", features: ["10 Seater", "Two Honeywell HTF7350 Turbofan Engines", "Global Range", "Executive Cabin"], photo: "/images/Bombardier Challenger.jpg", description: "The Challenger 350 is a ten-seat super-midsize jet powered by twin Honeywell HTF7350 turbofan engines for premium intercontinental travel." }
+  {
+    id: "j1",
+    make: "Learjet",
+    model: "45",
+    year: 2023,
+    category: "JET",
+    color: "Pearl White",
+    colorHex: "#F5F5F5",
+    dailyRate: 0,
+    deposit: 0,
+    seats: 8,
+    status: "available",
+    features: ["8 Seater", "Two Honeywell TFE731-20AR TurboFan Engines", "Private Cabin", "High-Speed Cruise"],
+    photo: "/images/Learjet 45.jpg",
+    description: "The Learjet 45 offers sleek performance and eight-seat comfort, powered by twin Honeywell TFE731-20AR turbofan engines."
+  },
+  {
+    id: "j2",
+    make: "Bombardier",
+    model: "Challenger 350",
+    year: 2023,
+    category: "JET",
+    color: "Obsidian Black",
+    colorHex: "#000000",
+    dailyRate: 0,
+    deposit: 0,
+    seats: 10,
+    status: "available",
+    features: ["10 Seater", "Two Honeywell HTF7350 Turbofan Engines", "Global Range", "Executive Cabin"],
+    photo: "/images/Bombardier Challenger.jpg",
+    photos: ["/images/Bombardier Challenger.jpg", "/images/Challenger_In.jpg"],
+    description: "The Challenger 350 is a ten-seat super-midsize jet powered by twin Honeywell HTF7350 turbofan engines for premium intercontinental travel."
+  }
 ];
 
 export const INITIAL_VEHICLES: Vehicle[] = [
-  // include aviation fleet first
   ...AVIATION_FLEET,
-  // Lamborghini Urus
   {
     id: "v1",
     make: "Lamborghini",
@@ -72,7 +101,6 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     photo: "/images/Lambo_Urus_Yellow.jpg",
     description: "The world's first Super SUV. Raw power meets everyday usability in the most aggressive Lamborghini ever built."
   },
-  // Lamborghini Huracan
   {
     id: "v2",
     make: "Lamborghini",
@@ -94,7 +122,6 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     photo: "/images/Lambco_Huracan_Red.jpg",
     description: "A razor-sharp supercar delivering uncompromised performance and handling."
   },
-  // Rolls-Royce Cullinan
   {
     id: "v3",
     make: "Rolls-Royce",
@@ -114,5 +141,77 @@ export const INITIAL_VEHICLES: Vehicle[] = [
     features: ["V12 Engine", "Luxury Interior", "Rear Theatre"],
     photo: "/images/Rolls_Royce_Cullinan_Black.jpg",
     description: "A statement of ultimate presence and comfort; the Cullinan is the SUV for the most discerning clients."
+  },
+  {
+    id: "v4",
+    make: "McLaren",
+    model: "720S",
+    year: 2024,
+    category: "CARS",
+    color: "White",
+    colorHex: "#FFFFFF",
+    colorOptions: [
+      { label: 'White', hex: '#FFFFFF', photo: '/images/McLaren_White.jpg' },
+      { label: 'Red', hex: '#C40000', photo: '/images/McLaren_Red.jpg' },
+      { label: 'Black', hex: '#000000', photo: '/images/McLaren_Black.jpg' }
+    ],
+    dailyRate: 1800,
+    deposit: 2500,
+    seats: 2,
+    status: "available",
+    features: ["Twin-Turbo V8", "720HP", "Carbon Fiber Monocoque", "Active Dynamics"],
+    photo: "/images/McLaren_White.jpg",
+    description: "The McLaren 720S is a masterpiece of engineering — 720 horsepower of pure British performance wrapped in stunning aerodynamic design."
+  },
+  {
+    id: "y1",
+    make: "Sea Ray",
+    model: "65ft Epic",
+    year: 2023,
+    category: "YACHT",
+    color: "White",
+    colorHex: "#F8F8F8",
+    dailyRate: 0,
+    deposit: 0,
+    seats: 12,
+    status: "available",
+    features: ["Full Crew", "Master Suite", "Outdoor Deck", "Premium Sound System"],
+    photo: "/images/Sea_Ray.jpg",
+    photos: ["/images/Sea_Ray.jpg", "/images/Sea_Ray_In.jpg"],
+    description: "The Sea Ray 65ft Epic delivers an unparalleled on-water experience with full crew, a master suite, and open-ocean capability for up to 12 guests."
+  },
+  {
+    id: "y2",
+    make: "Azimut",
+    model: "85ft Flybridge",
+    year: 2023,
+    category: "YACHT",
+    color: "White",
+    colorHex: "#F8F8F8",
+    dailyRate: 0,
+    deposit: 0,
+    seats: 14,
+    status: "available",
+    features: ["Full Crew", "Jacuzzi", "Flybridge Deck", "Master Suite", "Water Toys"],
+    photo: "/images/Azimut_85.jpg",
+    photos: ["/images/Azimut_85.jpg", "/images/Azimut85_In.jpg"],
+    description: "The Azimut 85ft Flybridge is the pinnacle of open-sea luxury — featuring a jacuzzi, full crew, and a stunning flybridge deck for up to 14 guests."
+  },
+  {
+    id: "y3",
+    make: "Azimut",
+    model: "100ft Grande",
+    year: 2024,
+    category: "YACHT",
+    color: "White",
+    colorHex: "#F8F8F8",
+    dailyRate: 0,
+    deposit: 0,
+    seats: 16,
+    status: "available",
+    features: ["Full Crew", "Master Suite", "Multiple Cabins", "Jacuzzi", "Water Toys", "Gourmet Kitchen"],
+    photo: "/images/Azimut_100.jpg",
+    photos: ["/images/Azimut_100.jpg", "/images/Azimut100_In.jpg"],
+    description: "The Azimut 100ft Grande is our flagship superyacht — an extraordinary vessel delivering world-class luxury for up to 16 guests with full crew and every amenity."
   }
 ];

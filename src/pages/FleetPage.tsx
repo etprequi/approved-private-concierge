@@ -15,6 +15,7 @@ interface FleetPageProps {
 
 export default function FleetPage({ vehicles, onBook, onSelect, onInquire, initialFilter }: FleetPageProps) {
   const [filter, setFilter] = React.useState(initialFilter || 'CARS');
+React.useEffect(() => { if (initialFilter) setFilter(initialFilter); }, [initialFilter]);
   const [search, setSearch] = React.useState('');
   
   const filteredVehicles = vehicles.filter(v => {
