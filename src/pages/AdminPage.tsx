@@ -257,10 +257,33 @@ export default function AdminPage({ onExit, vehicles, onVehiclesChange }: AdminP
              </div>
           </div>
         );
-      case 'damage':
-              case 'users':
-                const users = getUsers();
-                return (
+     case 'users': {
+  const users = getUsers();
+  return (
+    <div className="space-y-8">
+      <div className="bg-[#111111] border border-white/5 rounded-3xl p-8">
+        <h3 className="font-serif text-2xl italic mb-6">User Management</h3>
+        <UserList users={users} />
+      </div>
+      <UserCreateForm onCreate={(u) => { createUser(u); }} onReset={(email, pass) => updatePasswordForEmail(email, pass)} />
+    </div>
+  );
+}
+case 'damage':
+  return (
+    <div className="space-y-8">
+      <div className="bg-[#111111] border border-white/5 rounded-3xl p-12 text-center">
+        <AlertTriangle className="text-gold mx-auto mb-6" size={40} strokeWidth={1} />
+        <h3 className="font-serif text-3xl italic text-white mb-4">Integrity Reports</h3>
+        <p className="text-silver text-[13px] tracking-widest uppercase font-light max-w-sm mx-auto mb-12">
+          Zero active incident reports. The fleet maintains 100% operational integrity.
+        </p>
+        <button className="bg-white/5 border border-white/10 text-white px-10 py-3 rounded-full text-[10px] font-bold tracking-[0.2em] hover:bg-red-400/10 hover:text-red-400 hover:border-red-400/30 transition-all uppercase">
+          File Incident Report
+        </button>
+      </div>
+    </div>
+  );
                   <div className="space-y-8">
                     <div className="bg-[#111111] border border-white/5 rounded-3xl p-8">
                       <h3 className="font-serif text-2xl italic mb-6">User Management</h3>
