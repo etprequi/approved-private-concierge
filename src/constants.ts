@@ -57,8 +57,8 @@ export const AVIATION_FLEET: Vehicle[] = [
     seats: 8,
     status: "available",
     features: ["8 Seater", "Two Honeywell TFE731-20AR TurboFan Engines", "Private Cabin", "High-Speed Cruise"],
-    photo: "/images/Learjet_45.webp",
-    photos: ["/images/Learjet_45.webp", "/images/Learjet_45_In.webp"],
+    photo: "/images/Learjet_45.jpg",
+    photos: ["/images/Learjet_45.jpg", "/images/Learjet_45_In.jpg"],
     description: "The Learjet 45 offers sleek performance and eight-seat comfort, powered by twin Honeywell TFE731-20AR turbofan engines."
   },
   {
